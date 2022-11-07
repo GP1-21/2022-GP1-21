@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "317816016396",
+    "project_id": "huna-ksa",
+    "storage_bucket": "huna-ksa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317816016396:android:5be7b0b52056d4b4012829",
+        "android_client_info": {
+          "package_name": "com.example.huna_ksa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "317816016396-tmemtb0dsd0l10ltnl1cr9k1p1tqn0da.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZHrZiIjugVi8ms_mxQgLoTAYpGYOBkkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "317816016396-tmemtb0dsd0l10ltnl1cr9k1p1tqn0da.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

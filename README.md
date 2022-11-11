@@ -15,7 +15,7 @@ Steps
 2. Install 21_HunaKSA_App APK file located in Release section.
 3. Open Android Studio. 
 4. Run the emulator.
-5. Go to File > Profile or Debug APK. 
+5. Go to File > 'Profile or Debug APK'. 
 6. Browse for the 21_HunaKSA_App APK file location on your laptop.
 7. Run App
 

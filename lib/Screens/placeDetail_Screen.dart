@@ -171,7 +171,6 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                             size: Size.fromWidth(MediaQuery.of(context).size.width*.70), // Image radius
                             child: Image.network(placeData?.elementAt(0).get("images")[index],fit: BoxFit.fill,)
 
-                            //FadeInImage(image: NetworkImage(placeData?.elementAt(0).get("images")[index],), fit: BoxFit.fill, placeholder: const AssetImage("images/Boulevard.png"),),
                           ),
                         ),
                         GestureDetector(

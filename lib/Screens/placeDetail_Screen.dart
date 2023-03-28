@@ -32,6 +32,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
 
     super.initState();
   }
+  //comments section
   addComment(String comment) async {
     await _firestore
         .collection('userComments')
@@ -47,6 +48,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
 
     });
   }
+  // reported comment section
   report(String id,String comment) async {
 
     showAlertDialog(context,() async {
@@ -68,6 +70,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
 
   }
 
+  //add to favorite page
   addToFavourite(String place,String imageurl) async {
     await _firestore
         .collection('favouritePlace')

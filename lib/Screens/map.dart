@@ -67,5 +67,24 @@ class _MapViewState extends State<MapView> {
   }
 
   @override
+  Widget build(BuildContext context) {
+    return showData != true
+        ? Center(
+      child: CircularProgressIndicator(),
+    )
+        : GoogleMap( //the map screen
+      compassEnabled: true,
+      mapType: MapType.normal,
+      markers: _marker,
+      myLocationEnabled: true, //to show my location
+      zoomControlsEnabled: false,
+      initialCameraPosition: CameraPosition( //the zoom of the map
+          target: LatLng(lat, lng),
 
+          zoom: 14.151926040649414),
+      onMapCreated: (GoogleMapController controller) {
+        _controller.complete(controller); //the controller in the map
+      },
+    );
+  }
 }

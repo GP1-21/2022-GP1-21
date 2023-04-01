@@ -53,7 +53,6 @@ class _CityScreenState extends State<CityScreen> {
                 child: cards.elementAt(index));
           }
           //children: orderBubbles,
-
-          ),
-    ),
-  );
+        ),
+      ),
+    );

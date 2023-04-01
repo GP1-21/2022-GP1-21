@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:huna_ksa/Widgets/site_Card.dart';
+import 'package:huna_ksa/Components/common_Functions.dart';
+import 'package:huna_ksa/Screens/main_Screen.dart';
+import 'package:huna_ksa/Screens/placeDetail_Screen.dart';
+import 'package:huna_ksa/Widgets/place_Card.dart';
 import 'package:huna_ksa/Components/session.dart' as session;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,6 +28,28 @@ class _HomeScreenState extends State<HomeScreen> {
 
     super.initState();
   }
+  onClick(String name,String image){
+    push(context, PlaceDetailScreen(place: name, imageURL: image,));
+  }
+  addToFavourite(String place,String imageurl) async {
+    await _firestore
+        .collection('favouritePlace')
+        .doc(session.email+place)
+        .set(
+      {
+        'email': session.email,
+        'place': place,
+        'image':imageurl
+      },
+    ).then((value) {
+setState(() {
+  if(session.favourite.contains(place)){
+
+  }else{
+    session.favourite.add(place);
+  }});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,98 +71,192 @@ class _HomeScreenState extends State<HomeScreen> {
                 height:MediaQuery.of(context).size.height*.65,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(40)
+                  color: kBackgroundColor,
+                  borderRadius: BorderRadius.circular(30)
                 ),
 child: Padding(
-  padding: const EdgeInsets.symmetric(vertical: 30),
-  child:   Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 20,right: 20),
-                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
+  padding: const EdgeInsets.symmetric(vertical: 40),
+  child:   SingleChildScrollView(
+    child: SizedBox(
+      height: 723,
+      child: Column(mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+
+          StreamBuilder<QuerySnapshot>(
+              stream: _firestore.collection('placeData')
+                  .where("city",isEqualTo: session.city).where('category',isEqualTo: "General")
+              //.orderBy("name", descending: false)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: kProgressIndicatorColor,
+                      color: kProgressIndicatorColor,
+                    ),
+                  );
+                }
+                final placeData = snapshot.data?.docs;
+                final length= placeData!.length;
+
+
+                return placeData.isEmpty?Container():Column(
                   children: [
-                    Text("General Sites",style: const TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
-                    //Text("show more >>",style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.white70,
-                      ),
-                      onPressed: () {},
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20,right: 20),
+                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text('show more', style: TextStyle(color: Colors.black),),
-                          Icon( // <-- Icon
-                            Icons.keyboard_double_arrow_right,
-                            color: Colors.black,
-                            size: 20.0,
-                          ),
+                          Text("General Sites",style: const TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
+                          smallButton("show more >>", (){
+                            session.category="General";
+                          pushAndRemove(context, MainScreen(title: "0",));
+                          }),
+
                         ],
                       ),
                     ),
-                  ],
-                ),
-              ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10,bottom: 10,left: 10,right: 10),
+                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            PlaceCard(imagePath:placeData.elementAt(0).get("images"),placeName: placeData.elementAt(0).get("name"),likeClick: addToFavourite,imageClick: onClick),
+                            length >1?PlaceCard(imagePath:placeData.elementAt(1).get("images"),placeName: placeData.elementAt(1).get("name"),likeClick: addToFavourite,imageClick: onClick):Container(),
+                            length >2?PlaceCard(imagePath:placeData.elementAt(2).get("images"),placeName: placeData.elementAt(2).get("name"),likeClick: addToFavourite,imageClick: onClick):Container(),
 
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SiteCard(imagePath: "images/jeddahCor.jpg", cityName: "  Corniche"),
-                    SiteCard(imagePath: "images/WadiHanifa.jpg", cityName: "Wadi Hanifa"),
-                    SiteCard(imagePath: "images/highCity.jpg", cityName: "  High City")
                           ]),
-            ],
-          ),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-        child: Divider(
-          thickness: 3,
-        ),
-      ),
-      Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20,right: 20),
-            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text("Woman Sites",style: const TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
-               // Text("show more >>",style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.white70,
-                  ),
-                  onPressed: () {},
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('show more', style: TextStyle(color: Colors.black),),
-                      Icon( // <-- Icon
-                        Icons.keyboard_double_arrow_right,
-                        color: Colors.black,
-                        size: 20.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Divider(
+                        thickness: 3,
                       ),
-                    ],
-                  ),
-                ),
+                    ),
 
-              ],
-            ),
+                  ],
+                );
+              }
+
+          ),
+          StreamBuilder<QuerySnapshot>(
+              stream: _firestore.collection('placeData')
+                  .where("city",isEqualTo: session.city).where('category',isEqualTo: "Woman")
+              //.orderBy("name", descending: false)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: kProgressIndicatorColor,
+                      color: kProgressIndicatorColor,
+                    ),
+                  );
+                }
+                final placeData = snapshot.data?.docs;
+                final length= placeData!.length;
+
+
+                return placeData!.isEmpty?Container():Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
+                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          const Text("Woman Sites",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
+                          smallButton("show more >>", (){
+                            session.category="Woman";
+                            pushAndRemove(context, MainScreen(title: "1"));
+                          }),
+
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10,bottom: 10,left: 10,right: 10),
+                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            PlaceCard(imagePath:placeData.elementAt(0).get("images"),placeName: placeData.elementAt(0).get("name"),likeClick: addToFavourite,imageClick: onClick,),
+                            length >1?PlaceCard(imagePath:placeData.elementAt(1).get("images"),placeName: placeData.elementAt(1).get("name"),likeClick: addToFavourite,imageClick: onClick):Container(),
+                            length >2?PlaceCard(imagePath:placeData.elementAt(2).get("images"),placeName: placeData.elementAt(2).get("name"),likeClick: addToFavourite,imageClick: onClick):Container(),
+
+                          ]),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Divider(
+                        thickness: 3,
+                      ),
+                    ),
+
+                  ],
+                );
+              }
+
           ),
 
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SiteCard(imagePath: "images/bounce.jpeg", cityName: "    Bounce"),
-                SiteCard(imagePath: "images/Kore_Kobar.jpg", cityName: "      Kore"),
-                SiteCard(imagePath: "images/nirvana.jpeg", cityName: "   Nirvana")
+          StreamBuilder<QuerySnapshot>(
+              stream: _firestore.collection('placeData')
+                  .where("city",isEqualTo: session.city).where('category',isEqualTo: "Kids")
+              //.orderBy("name", descending: false)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: kProgressIndicatorColor,
+                      color: kProgressIndicatorColor,
+                    ),
+                  );
+                }
+                final placeData = snapshot.data?.docs;
+                final length= placeData!.length;
 
-              ]),
+
+                return placeData!.isEmpty?Container():Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
+                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text("Kids Sites",style: const TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
+                          smallButton("show more >>", (){
+                            session.category="Kids";
+                            pushAndRemove(context, MainScreen(title: "2",));
+                          }),
+
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10,bottom: 10,left: 10,right: 10),
+                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            PlaceCard(imagePath:placeData.elementAt(0).get("images"),placeName: placeData.elementAt(0).get("name"),likeClick: addToFavourite,imageClick: onClick),
+                            length >1?PlaceCard(imagePath:placeData.elementAt(1).get("images"),placeName: placeData.elementAt(1).get("name"),likeClick: addToFavourite,imageClick: onClick):Container(),
+                            length >2?PlaceCard(imagePath:placeData.elementAt(2).get("images"),placeName: placeData.elementAt(2).get("name"),likeClick: addToFavourite,imageClick: onClick):Container(),
+
+                          ]),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Divider(
+                        thickness: 3,
+                      ),
+                    ),
+
+                  ],
+                );
+              }
+
+          ),
+
+
+          SizedBox(height: 50,)
         ],
       ),
-    ],
+    ),
   ),
 ),
             )

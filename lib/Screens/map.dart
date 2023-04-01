@@ -28,7 +28,6 @@ class _MapViewState extends State<MapView> {
   final Completer<GoogleMapController> _controller =
   Completer<GoogleMapController>();
 
-  //foucs of the map
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
@@ -48,9 +47,9 @@ class _MapViewState extends State<MapView> {
       lng = value.longitude;
       setState(() {});
 
-      PlacesServices().getPlaces().then((value) { //function for provide list
+      PlacesServices().getPlaces().then((value) {
         value.map((e) {
-          _marker.add(Marker( //markers of each place in the map
+          _marker.add(Marker(
               markerId: MarkerId(e.name.toString()),
               infoWindow: InfoWindow(title: e.name.toString()),
               position: LatLng(
@@ -72,18 +71,18 @@ class _MapViewState extends State<MapView> {
         ? Center(
       child: CircularProgressIndicator(),
     )
-        : GoogleMap( //the map screen
+        : GoogleMap(
       compassEnabled: true,
       mapType: MapType.normal,
       markers: _marker,
-      myLocationEnabled: true, //to show my location
+      myLocationEnabled: true,
       zoomControlsEnabled: false,
-      initialCameraPosition: CameraPosition( //the zoom of the map
+      initialCameraPosition: CameraPosition(
           target: LatLng(lat, lng),
 
           zoom: 14.151926040649414),
       onMapCreated: (GoogleMapController controller) {
-        _controller.complete(controller); //the controller in the map
+        _controller.complete(controller);
       },
     );
   }

@@ -320,7 +320,12 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                     child: Text("RECOMENDED FOR YOU:",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
                   ),
                   StreamBuilder<QuerySnapshot>(
-                      stream:_firestore.collection('placeData').where("city",isEqualTo: session.city).where('type',whereIn:session.interests).where("name",isNotEqualTo: widget.place).snapshots(),
+                      stream:_firestore
+                          .collection('placeData')
+                          .where("city",isEqualTo: session.city)
+                          .where('type',whereIn:session.interests)
+                          .where("name",isNotEqualTo: widget.place)
+                          .snapshots(),
 
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {

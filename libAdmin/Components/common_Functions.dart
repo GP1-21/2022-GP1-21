@@ -13,7 +13,8 @@ TextField inputText(TextEditingController controller,TextInputType type,String h
   return TextField(
     style: kTextStyle,
     controller: controller,
-    keyboardType: type,
+      enabled: on,
+      keyboardType: type,
     textAlign: TextAlign.center,
     decoration: kTextField2Decoration.copyWith(
         hintText: hint,
@@ -125,4 +126,35 @@ myNotifier(BuildContext context,String message,{String label="",required Functio
       },
     ): null
     ));
+}
+Widget smallButton(BuildContext context,Function function,Color color,String name,String text){
+  return GestureDetector(
+    onTap: (){
+      showAlertDialog(context, function, "", text);
+    },
+    child: Container(
+      height: 30,
+      width: 75,
+      decoration: BoxDecoration(color: color,borderRadius: BorderRadius.circular(15)),
+      child: Center(child: Text(name, style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.bold),)),
+    ),
+  );
+}
+// Widget deleteComment(Function function,BuildContext context) {
+//   return GestureDetector(
+//     onTap: (){
+//       showAlertDialog(context, function, "", "Do you want to remove?");
+//       //function();
+//     },
+//     child: ImageIcon(AssetImage('images/delete.png'),size: 27,color: Colors.black,),
+//   );
+// }
+Widget deleteButton(Function function,BuildContext context) {
+  return GestureDetector(
+    onTap: (){
+      showAlertDialog(context, function, "", "Do you want to remove?");
+      //function();
+    },
+    child: ImageIcon(AssetImage('images/delete.png'),size: 27,color: Colors.black,),
+  );
 }

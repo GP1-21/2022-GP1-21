@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:huna_ksa_admin/Components/storage_service.dart';
 import 'dart:io';
-import 'package:huna_ksa_admin/Widgets//city_Card.dart';
+//import 'package:huna_ksa_admin/Widgets//city_Card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:huna_ksa_admin/Components/common_Functions.dart';
+//import 'package:huna_ksa_admin/Components/common_Functions.dart';
 import 'package:huna_ksa_admin/Components/constants.dart';
-import 'package:huna_ksa_admin/Components/session.dart' as session;
+//import 'package:huna_ksa_admin/Components/session.dart' as session;
 import 'package:huna_ksa_admin/Widgets/deletePlace_Card.dart';
-import 'package:huna_ksa_admin/Widgets/rounded_Button.dart';
-import 'package:image_picker/image_picker.dart';
+//import 'package:huna_ksa_admin/Widgets/rounded_Button.dart';
+//import 'package:image_picker/image_picker.dart';
 
 final Storage storage=Storage();
 final _firestore = FirebaseFirestore.instance;
@@ -24,7 +24,8 @@ deleteComment(String id) async {
        await _firestore.collection('userComments').doc(id).delete();
 }
 deleteReportedComment(String id) async {
-  await _firestore.collection('reportedComments').doc(id).delete().then((value) => Navigator.pop(context));
+  Navigator.pop(context);
+  await _firestore.collection('reportedComments').doc(id).delete();
 }
   @override
   Widget build(BuildContext context) {

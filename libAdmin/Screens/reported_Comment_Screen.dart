@@ -25,6 +25,7 @@ deleteComment(String id) async {
 }
 deleteReportedComment(String id) async {
   Navigator.pop(context);
+
   await _firestore.collection('reportedComments').doc(id).delete();
 }
   @override

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:huna_ksa_admin/Components/storage_service.dart';
@@ -8,13 +10,18 @@ import 'package:huna_ksa_admin/Components/session.dart' as session;
 import 'package:huna_ksa_admin/Widgets/rounded_Button.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:place_picker/entities/location_result.dart';
+import 'package:place_picker/widgets/place_picker.dart';
 
 final Storage storage = Storage();
 final _firestore = FirebaseFirestore.instance;
 
 class AddScreen extends StatefulWidget {
   AddScreen({required this.city});
+
   final String city;
+
   @override
   State<AddScreen> createState() => _AddScreenState();
 }
@@ -27,6 +34,13 @@ class _AddScreenState extends State<AddScreen> {
   TextEditingController locationController = TextEditingController();
   TextEditingController fromController = TextEditingController();
   TextEditingController toController = TextEditingController();
+
+  final Completer<GoogleMapController> _controller = Completer();
+
+  static const CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(37.42796133580664, -122.085749655962),
+    zoom: 14.4746,
+  );
 
   var images;
   String category = "General", type = "Recreational Sites";
@@ -77,6 +91,10 @@ class _AddScreenState extends State<AddScreen> {
       //   print(images[i].name); });
     }
   }
+
+  double lat = 0.0;
+  double lng = 0.0;
+
   Future saveData() async {
     await _firestore.collection('placeData').doc(nameController.text).set(
       {
@@ -292,22 +310,74 @@ tost(context, "${nameController.text} added successfully");
                     ),
 
                     Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         const Text(
                           "Location:",
                           style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                         ),
-                        SizedBox(
-                          width: 10,
+                        const SizedBox(
+                          width: 5,
                         ),
-                        SizedBox(
-                            width: 240,
-                            height: 50,
-                            child: inputText(locationController, TextInputType.text,
-                                "Location")),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width:140,
+
+                              child: TextFormField(
+                                controller: locationController,
+                                decoration: InputDecoration(
+                                  hintText:"select location",
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide.none),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide.none),
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                ),
+                              ),
+                            ),
                       ],
                     ),
+                      ],
+                    ),
+                    const SizedBox(height:18,),
+                    Row(
+                      children: [
+                        const Text(
+                          "Select on map:",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                        const SizedBox(width:6,),
+                        RoundedButton(
+                          decuration: TextDecoration.underline,
+                          title: "Select On map",
+                          color: kPrimaryColor,
+                          onPress: () async {
+                            LocationResult result =
+                            await Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => PlacePicker(
+                                  "AIzaSyAuJYLmzmglhCpBYTn0BjbJhjWYg0fPEEA",
+                                  displayLocation: LatLng(23.8859, 45.0792),
+                                )));
+
+                            lat = result.latLng!.latitude;
+                            lng = result.latLng!.longitude;
+                            locationController =
+                                TextEditingController(text: result.name.toString());
+                            setState(() {});
+                          },
+                          textColor: Colors.blue,
+                          height: 10,
+                          horizontal: 5,
+                        ),
+                      ],
+                    )
+
                     SizedBox(
                       height: 20,
                     ),

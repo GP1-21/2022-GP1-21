@@ -81,7 +81,7 @@ class _SelectPlaceScreenState extends State<SelectPlaceScreen> {
                       child: ListView.builder(
                           //scrollDirection: Axis.horizontal,
 
-                          //padding: const EdgeInsets.only(left: 16, right:16),
+                          //select a place to edit 
                           itemCount: placeData?.length,
                           itemBuilder: (BuildContext listContext, int index) {
                             return GestureDetector(
@@ -133,16 +133,20 @@ class _SelectPlaceScreenState extends State<SelectPlaceScreen> {
                                       ),
                                     );
                                   }
-                                },
-                                child: PlaceCard(
-                                    placeData?.elementAt(index).get("name"),
-                                    context));
-                          }),
+    else if(widget.fromScreen=="comment")
+    {
+    push(context, DeleteCommentScreen(place: placeData?.elementAt(index).get("name")));
+    }
+    },
+    child: PlaceCard(placeData?.elementAt(index).get("name"), context));
+
+    }
                     ),
+                  ),
                   );
-                }),
+                }
           ),
-        ],
+          ), ],
       ),
     );
   }

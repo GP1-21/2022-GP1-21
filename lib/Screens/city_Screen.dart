@@ -41,18 +41,20 @@ class _CityScreenState extends State<CityScreen> {
       body: Padding(
         padding: const EdgeInsets.only(top: 15.0),
         child: ListView.builder(
-          //scrollDirection: Axis.horizontal,
-          padding:
-              const EdgeInsets.only(left: 30, right: 30, bottom: 10, top: 10),
-          itemCount: cards.length,
-          itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
-                onTap: () {
-                  saveCity(cards.elementAt(index).cityName);
-                },
-                child: cards.elementAt(index));
-          }
-          //children: orderBubbles,
-        ),
+            //scrollDirection: Axis.horizontal,
+            padding:
+                const EdgeInsets.only(left: 30, right: 30, bottom: 10, top: 10),
+            itemCount: cards.length,
+            itemBuilder: (BuildContext context, int index) {
+              return GestureDetector(
+                  onTap: () {
+                    saveCity(cards.elementAt(index).cityName);
+                  },
+                  child: cards.elementAt(index));
+            }
+            //children: orderBubbles,
+            ),
       ),
     );
+  }
+}

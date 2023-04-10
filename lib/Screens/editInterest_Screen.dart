@@ -35,20 +35,20 @@ class _EditInterestScreenState extends State<EditInterestScreen> {
       tost(context, "Please keep at least 3 interests");
     } else {
       if (!session.interests.contains(interest)) {
-        tost(context, "$interest Already removed");
+        tost(context, "$interest Already Removed");
       } else {
         removeInterest(interest);
-        tost(context, "$interest Removed successfully");
+        tost(context, "$interest Removed Successfully");
       }
     }
   }
 
   onAddClick(String interest) {
     if (session.interests.contains(interest)) {
-      tost(context, "$interest Already added");
+      tost(context, "$interest Already Added");
     } else {
       addInterest(interest);
-      tost(context, "$interest Added successfully");
+      tost(context, "$interest Added Successfully");
     }
   }
 

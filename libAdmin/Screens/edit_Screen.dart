@@ -17,15 +17,17 @@ class EditScreen extends StatefulWidget {
   final String city,name,price,description,location,from,to;
   late final String category,type;
   late final imageUrls;
-  late final bool time,priceCheck;
+  final bool time,priceCheck;
 
   @override
   State<EditScreen> createState() => _EditScreenState();
 }
 
 class _EditScreenState extends State<EditScreen> {
+
   String btnText = "Choose files";
   var images;
+  bool priceCheck=false,time=false;
   TextEditingController nameController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -41,6 +43,8 @@ class _EditScreenState extends State<EditScreen> {
   setControllers(){
   setState(() {
     session.imagesURLList=widget.imageUrls;
+    priceCheck=widget.priceCheck;
+    time=widget.time;
     nameController.text=widget.name;
     priceController.text=widget.price;
     descriptionController.text=widget.description;
@@ -67,7 +71,7 @@ class _EditScreenState extends State<EditScreen> {
     else if (widget.imageUrls==[] && images==null) {
       tost(context, "Please select image");
     }
-    else if (widget.priceCheck==false && priceController.text == "") {
+    else if (priceCheck==false && priceController.text == "") {
       tost(context, "Please type price");
     }
     else if (descriptionController.text == "") {
@@ -76,10 +80,10 @@ class _EditScreenState extends State<EditScreen> {
     else if (locationController.text == "") {
       tost(context, "Please type location");
     }
-    else if (widget.time==false && fromController.text == "") {
+    else if (time==false && fromController.text == "") {
       tost(context, "Please type time 'from'");
     }
-    else if (widget.time==false && toController.text == "") {
+    else if (time==false && toController.text == "") {
       tost(context, "Please type time 'to'");
     }
 else
@@ -130,12 +134,12 @@ else
         'category':widget.category,
         'type':widget.type,
         'price':priceController.text,
-        'free':widget.priceCheck?"1":"0",
+        'free':priceCheck?"1":"0",
         'description':descriptionController.text,
         'location':locationController.text,
         'from':fromController.text,
         'to':toController.text,
-        'time':widget.time?"1":"0",
+        'time':time?"1":"0",
       },
     ).then((value) {
       session.imagesURLList.clear();
@@ -194,16 +198,16 @@ else
                         Text(
                           "Place name:",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
+                              fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         SizedBox(
-                          width: 10,
+                          width: 5,
                         ),
                         SizedBox(
-                            width: 230,
+                            width: 210,
                             height: 50,
                             child: inputText(nameController, TextInputType.text,
-                                "Place Name")),
+                                "Place Name",false)),
                       ],
                     ),
                     SizedBox(
@@ -214,22 +218,21 @@ else
                         Text(
                           "Place photos:",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
+                              fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 5,
                         ),
                         RoundedButton(
                           decuration: TextDecoration.underline,
                           title: btnText,
                           color: kPrimaryColor,
-
                           onPress: () async {
                             pickImage();
                           },
                           textColor: Colors.blue,
                           height: 30,
-                          horizontal: 10,
+                          horizontal: 5,
                         ),
                         SizedBox(
                           height: 20,
@@ -243,10 +246,10 @@ else
                       Text(
                         "Place category:",
                         style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                       SizedBox(
-                        width: 10,
+                        width: 5,
                       ),
                       dropDownalert(widget.category,"category", <String>[
                         'General',
@@ -262,12 +265,12 @@ else
                       Text(
                         "Place type:",
                         style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                       SizedBox(
-                        width: 10,
+                        width: 5,
                       ),
-                      dropDownalert( widget.type,"type", <String>[
+                      dropDownalert(widget.type,"type", <String>[
                         'Recreational Sites',
                         'Historical Sites',
                         'Malls',
@@ -276,7 +279,7 @@ else
                         "Beach",
                         "Spa",
                         "Parks"
-                      ],230),
+                      ],210),
                     ],),
                     SizedBox(
                       height: 20,
@@ -286,27 +289,28 @@ else
                         Text(
                           "Ticket price:",
                           style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         SizedBox(
-                          width: 10,
+                          width: 5,
                         ),
                         SizedBox(
-                            width: 100,
+                            width: 90,
                             height: 50,
                             child: inputText(priceController, TextInputType.text,
-                                "Price")),
+                                "Price",!priceCheck)),
 
                         Container(
-                          width: 130,
+                          width: 120,
                           child: CheckboxListTile(
                             activeColor: Colors.white,
                             checkColor: Colors.black,
                             title: Text("Free",style: kTextStyle,),
-                            value: widget.priceCheck,
+                            value: priceCheck,
                             onChanged: (newValue) {
                               setState(() {
-                                widget.priceCheck = newValue!;
+                                priceController.clear();
+                                priceCheck = newValue!;
                               });
                             },
                             controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
@@ -322,16 +326,16 @@ else
                         Text(
                           "Description:",
                           style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         SizedBox(
-                          width: 10,
+                          width: 15,
                         ),
                         SizedBox(
-                            width: 240,
+                            width: 195,
                             height: 50,
                             child: inputText(descriptionController, TextInputType.text,
-                                "Description")),
+                                "Description",true)),
                       ],
                     ),
                     SizedBox(
@@ -343,16 +347,16 @@ else
                         const Text(
                           "Location:",
                           style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         SizedBox(
-                          width: 10,
+                          width: 5,
                         ),
                         SizedBox(
-                            width: 240,
+                            width: 230,
                             height: 50,
                             child: inputText(locationController, TextInputType.text,
-                                "Location")),
+                                "Location",true)),
                       ],
                     ),
                     SizedBox(
@@ -361,7 +365,7 @@ else
                     Text(
                       "Opening and closing hours:",
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                     SizedBox(
                       height: 10,
@@ -371,7 +375,7 @@ else
                           width: 100,
                           height: 50,
                           child: inputText(fromController, TextInputType.text,
-                              "12:00")),
+                              "12:00",!time)),
 
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -385,17 +389,20 @@ else
                           width: 100,
                           height: 50,
                           child: inputText(toController, TextInputType.text,
-                              "12:00")),
+                              "12:00",!time)),
 
                     ],),
                     CheckboxListTile(
                       activeColor: Colors.white,
                       checkColor: Colors.black,
                       title: Text("Open 24 hours",style: kTextStyle,),
-                      value: widget.time,
+                      value: time,
                       onChanged: (newValue) {
                         setState(() {
-                          widget.time = newValue!;
+                          toController.clear();
+                          fromController.clear();
+                          time = newValue!;
+
                         });
                       },
                       controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
@@ -409,10 +416,10 @@ else
                     padding: const EdgeInsets.only(
                         top: 30, left: 10, right: 10, bottom: 30),
                     child: RoundedButton(
-                      title: "Save",
+                      title: "Submit",
                       color: kPrimaryColor,
-                      onPress: () async{
-                       save();
+                      onPress: () async {
+                        save();
                       },
                       textColor: Colors.black,
                       height: 20,
@@ -421,8 +428,7 @@ else
                   ),
                 ),
               ],
-            ),
-          ),
+            ),          ),
         ),
       ),
     );

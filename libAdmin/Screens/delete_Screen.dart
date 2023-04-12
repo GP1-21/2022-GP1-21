@@ -27,7 +27,7 @@ class _DeleteScreenState extends State<DeleteScreen> {
     for (int i = 0; i < imageUrls.length; i++) {
       storage.deleteImages(name + i.toString()).then((value) async {
         if (i == imageUrls.length - 1) {
-          await _firestore.collection('placeData').doc(name).delete().then((value) => print("deleted"));
+          await _firestore.collection('placeData').doc(name).delete().then((value) => Navigator.pop(context));
         }
       });
     }
@@ -40,7 +40,7 @@ class _DeleteScreenState extends State<DeleteScreen> {
         centerTitle: true,
         title: const Text("Delete Place",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25,color: Colors.black),),
         backgroundColor: Colors.transparent,
-        elevation: 0, 
+        elevation: 0,
         leading: GestureDetector(
           onTap: (){
             Navigator.pop(context);

@@ -4,7 +4,7 @@ import 'package:huna_ksa_admin/Widgets/rounded_Button.dart';
 import '../Components/common_Functions.dart';
 import '../Components/constants.dart';
 
-//will reserve the data from the delete_Screen page to delete a place
+//will receive the data from the delete_Screen page to delete a place
 Widget DeletePlaceCard(List imagePaths,String placeName,Function delete,BuildContext context)
 {
   return Container(
@@ -44,7 +44,7 @@ Widget DeletePlaceCard(List imagePaths,String placeName,Function delete,BuildCon
   );
 }
 
-//will reserve the data from the delete_Comment_Screen page to delete a comment
+//will receive the data from the delete_Comment_Screen page to delete a comment
 Widget DeleteCommentCard(String username,String comment,String placeName,Function delete,BuildContext context)
 {
   return Container(
@@ -88,7 +88,7 @@ Widget DeleteCommentCard(String username,String comment,String placeName,Functio
   );
 }
 
-//will reserve the data from the reported_Comment_Screen page to delete a comment
+//will receive the data from the reported_Comment_Screen page to delete a comment
 Widget DeleteReportedCommentCard(String username,String comment,String placeName,Function delete,Function deleteReport,BuildContext context,String id)
 {
   return Container(

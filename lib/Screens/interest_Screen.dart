@@ -9,13 +9,15 @@ import '../Components/common_Functions.dart';
 import '../Widgets/rounded_Button.dart';
 import '../Components/constants.dart';
 
-
+//connect to the database in firebase
 final _firestore = FirebaseFirestore.instance;
 
+//StatefulWidget describes part of the user interface
 class InterestScreen extends StatefulWidget {
   static const String id = 'interest_screen';
   InterestScreen();
 
+  //state read synchronously when the widget is built, might change during the lifetime of the widget
   @override
   State<InterestScreen> createState() => _InterestScreenState();
 }
@@ -36,6 +38,7 @@ class _InterestScreenState extends State<InterestScreen> {
     });
     try {
 
+        //save the user interest to the database
         await _firestore
             .collection('userData')
             .doc(session.email)
@@ -120,6 +123,8 @@ class _InterestScreenState extends State<InterestScreen> {
                       width: MediaQuery.of(context).size.width*.90,
                     ),
                   ),
+
+                  //list of 8 interests
                   Positioned(
                     child: Container(
                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(5),
@@ -177,6 +182,7 @@ class _InterestScreenState extends State<InterestScreen> {
                     color: kPinkColor,
                     onPress: () async
   {
+    //eror message if the user didn't add 3 or more interests
 if(interests.length>=3){
   createUser();
 }else{

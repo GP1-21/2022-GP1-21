@@ -9,9 +9,11 @@ import 'package:huna_ksa_admin/Widgets/rounded_Button.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+//connect to the database in firebase
 final Storage storage = Storage();
 final _firestore = FirebaseFirestore.instance;
 
+//StatefulWidget describes part of the user interface
 class EditScreen extends StatefulWidget {
   EditScreen({required this.city, required this.category, required this.type, this.imageUrls, required this.name, required this.price, required this.description, required this.location, required this.from, required this.to, required this.time, required this.priceCheck});
   final String city,name,price,description,location,from,to;
@@ -19,10 +21,12 @@ class EditScreen extends StatefulWidget {
   late final imageUrls;
   final bool time,priceCheck;
 
+  //state read synchronously when the widget is built, might change during the lifetime of the widget
   @override
   State<EditScreen> createState() => _EditScreenState();
 }
 
+//initialize text controller
 class _EditScreenState extends State<EditScreen> {
 
   String btnText = "Choose files";
@@ -34,12 +38,14 @@ class _EditScreenState extends State<EditScreen> {
   TextEditingController locationController = TextEditingController();
   TextEditingController fromController = TextEditingController();
   TextEditingController toController = TextEditingController();
+
 @override
   void initState() {
     // TODO: implement initState
   setControllers();
   super.initState();
   }
+
   setControllers(){
   setState(() {
     session.imagesURLList=widget.imageUrls;
@@ -56,6 +62,7 @@ class _EditScreenState extends State<EditScreen> {
 
   bool showSpinner = false;
 
+//select image from the device
   Future pickImage() async {
     try {
       images = await ImagePicker().pickMultiImage(requestFullMetadata: true);
@@ -64,6 +71,7 @@ class _EditScreenState extends State<EditScreen> {
     }
   }
 
+  //text filled
   Future save() async{
     if (nameController.text == "") {
       tost(context, "Please type place name");
@@ -101,6 +109,8 @@ else
       }
     }
   }
+
+  //delete from database
   Future deleteStorage(String name) async {
     if (session.imagesURLList.isEmpty) return;
     for (int i = 0; i < session.imagesURLList.length; i++) {
@@ -113,6 +123,8 @@ else
       });
     }
   }
+
+  //save to database
   Future saveStorage(String name) async {
     session.imagesURLList.clear();
     if (images.isEmpty) return;
@@ -125,6 +137,8 @@ else
 
     }
   }
+
+  //add new data to the database
   Future updateData() async {
     await _firestore.collection('placeData').doc(widget.name).update(
       {
@@ -153,7 +167,7 @@ else
   }
 
 
-
+//the page structure
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -251,6 +265,7 @@ else
                       SizedBox(
                         width: 5,
                       ),
+                      //drop down menu
                       dropDownalert(widget.category,"category", <String>[
                         'General',
                         'Woman',
@@ -270,6 +285,7 @@ else
                       SizedBox(
                         width: 5,
                       ),
+                      //drop down menu
                       dropDownalert(widget.type,"type", <String>[
                         'Recreational Sites',
                         'Historical Sites',
@@ -342,6 +358,7 @@ else
                       height: 20,
                     ),
 
+                    //edit text location the location can't be changed
                     Row(
                       children: [
                         const Text(

@@ -11,11 +11,16 @@ import 'package:huna_ksa_admin/Widgets/deletePlace_Card.dart';
 import 'package:huna_ksa_admin/Widgets/rounded_Button.dart';
 import 'package:image_picker/image_picker.dart';
 
+//connect to the database in firebase
 final Storage storage=Storage();
 final _firestore = FirebaseFirestore.instance;
+
+//StatefulWidget describes part of the user interface
 class DeleteScreen extends StatefulWidget {
   DeleteScreen({required this.city});
 final String city;
+
+  //state read synchronously when the widget is built, might change during the lifetime of the widget
   @override
   State<DeleteScreen> createState() => _DeleteScreenState();
 }
@@ -33,6 +38,7 @@ class _DeleteScreenState extends State<DeleteScreen> {
     }
   }
 
+  //page structure
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +51,7 @@ class _DeleteScreenState extends State<DeleteScreen> {
           onTap: (){
             Navigator.pop(context);
           },
+          //delete icon
           child: Icon(Icons.arrow_back_ios_new_rounded,size:
           40,color: kPrimaryColor,),
         ),
@@ -82,6 +89,7 @@ class _DeleteScreenState extends State<DeleteScreen> {
                     itemCount: placeData?.length,
                     itemBuilder: (BuildContext listContext, int index) {
 
+                     //this send the data to the deletePlace_Card page in the widgets file to be deleted
                      return DeletePlaceCard(placeData?.elementAt(index).get("images"), placeData?.elementAt(index).get("name"), delete, context);
 
 

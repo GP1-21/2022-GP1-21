@@ -9,12 +9,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../Components/constants.dart';
 
-
+//connect to the database in firebase
 final _firestore = FirebaseFirestore.instance;
 
+//StatefulWidget describes part of the user interface
 class HomeScreen extends StatefulWidget {
 
-
+  //state read synchronously when the widget is built, might change during the lifetime of the widget
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -29,10 +30,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
     super.initState();
   }
+
+  //transfer to place details page if the user click on the plase
   onClick(String name,String image){
     push(context, PlaceDetailScreen(place: name, imageURL: image,));
   }
+
+  //add the place in favourite if the user click on the like button
   addToFavourite(String place,String imageurl) async {
+    //bringing the data from firebase
     await _firestore
         .collection('favouritePlace')
         .doc(session.email+place)
@@ -83,7 +89,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(mainAxisAlignment: MainAxisAlignment.start,
                           children: [
 
+                            //general category part
                             StreamBuilder<QuerySnapshot>(
+                              //take the data from firebase
                                 stream: _firestore.collection('placeData')
                                     .where("city",isEqualTo: session.city).where('category',isEqualTo: "General")
                                 //.orderBy("name", descending: false)
@@ -107,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         padding: const EdgeInsets.only(left: 20,right: 20),
                                         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           crossAxisAlignment: CrossAxisAlignment.end,
+                                          //show more button that will open the list of places page
                                           children: [
                                             const Text("General",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
                                             smallButton(width: 96,"show more >", (){
@@ -117,6 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ],
                                         ),
                                       ),
+                                      //3 places for each category
                                       Padding(
                                         padding: const EdgeInsets.only(top: 10,bottom: 10,left: 10,right: 10),
                                         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -139,7 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 }
 
                             ),
+                            //woman category part
                             StreamBuilder<QuerySnapshot>(
+                              //take the data from firebase
                                 stream: _firestore.collection('placeData')
                                     .where("city",isEqualTo: session.city).where('category',isEqualTo: "Woman")
                                 //.orderBy("name", descending: false)
@@ -163,6 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
                                         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           crossAxisAlignment: CrossAxisAlignment.end,
+                                          //show more button that will open the list of places page
                                           children: [
                                             const Text("Woman",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
                                             smallButton(width: 96,"show more >", (){
@@ -175,6 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ],
                                         ),
                                       ),
+                                      //3 places for each category
                                       Padding(
                                         padding: const EdgeInsets.only(top: 10,bottom: 10,left: 10,right: 10),
                                         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -198,7 +212,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
                             ),
 
+                            //kids category part
                             StreamBuilder<QuerySnapshot>(
+                              //take the data from firebase
                                 stream: _firestore.collection('placeData')
                                     .where("city",isEqualTo: session.city).where('category',isEqualTo: "Kids")
                                 //.orderBy("name", descending: false)
@@ -223,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           crossAxisAlignment: CrossAxisAlignment.end,
                                           children: [
-
+                                            //show more button that will open the list of places page
                                             Text("Kids",style: const TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
                                             smallButton(width: 96,"show more >", (){
                                               session.category="Kids";
@@ -234,9 +250,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ],
                                         ),
                                       ),
+                                      //3 places for each category
                                       Padding(
                                         padding: const EdgeInsets.only(top: 10,bottom: 10,left: 10,right: 10),
                                         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            //show more button that will open the list of places page
                                             children: [
                                               PlaceCard(imagePath:placeData.elementAt(0).get("images"),placeName: placeData.elementAt(0).get("name"),likeClick: addToFavourite,imageClick: onClick),
                                               length >1?PlaceCard(imagePath:placeData.elementAt(1).get("images"),placeName: placeData.elementAt(1).get("name"),likeClick: addToFavourite,imageClick: onClick):Container(),

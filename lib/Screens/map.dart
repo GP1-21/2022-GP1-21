@@ -26,8 +26,8 @@ class MapView extends StatefulWidget {
 
 class _MapViewState extends State<MapView> {
   final Completer<GoogleMapController> _controller =
-  Completer<GoogleMapController>();
-
+      Completer<GoogleMapController>();
+//Creates a immutable representation of the GoogleMap camera based on lat and lng
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
@@ -35,18 +35,19 @@ class _MapViewState extends State<MapView> {
 
   double lat = 0.0;
   double lng = 0.0;
+  //markers to set on the map
   Set<Marker> _marker = {};
 
   bool showData = false;
 
   @override
   void initState() {
-
+    //determine the postion based on latitude and longitude
     LocationHelper().determinePosition().then((value) {
       lat = value.latitude;
       lng = value.longitude;
       setState(() {});
-
+      //function for provide list of markers
       PlacesServices().getPlaces().then((value) {
         value.map((e) {
           _marker.add(Marker(
@@ -66,24 +67,23 @@ class _MapViewState extends State<MapView> {
   }
 
   @override
+  //style of the map and markers
   Widget build(BuildContext context) {
     return showData != true
         ? Center(
-      child: CircularProgressIndicator(),
-    )
+            child: CircularProgressIndicator(),
+          )
         : GoogleMap(
-      compassEnabled: true,
-      mapType: MapType.normal,
-      markers: _marker,
-      myLocationEnabled: true,
-      zoomControlsEnabled: false,
-      initialCameraPosition: CameraPosition(
-          target: LatLng(lat, lng),
-
-          zoom: 14.151926040649414),
-      onMapCreated: (GoogleMapController controller) {
-        _controller.complete(controller);
-      },
-    );
+            compassEnabled: true,
+            mapType: MapType.normal,
+            markers: _marker,
+            myLocationEnabled: true,
+            zoomControlsEnabled: false,
+            initialCameraPosition: CameraPosition(
+                target: LatLng(lat, lng), zoom: 14.151926040649414),
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+            },
+          );
   }
 }

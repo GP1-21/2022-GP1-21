@@ -260,6 +260,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                           ],
                         )
                       ],
+
                     ),
                   ),
                   Padding(

@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:huna_ksa/Components/common_Functions.dart';
 import 'package:huna_ksa/Screens/main_Screen.dart';
 import 'package:huna_ksa/Screens/profile_Screen.dart';
@@ -10,104 +13,113 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../Components/constants.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 
-
 final _firestore = FirebaseFirestore.instance;
 
 class PlaceDetailScreen extends StatefulWidget {
-PlaceDetailScreen({required this.place,required this.imageURL});
-final place,imageURL;
+  PlaceDetailScreen({required this.place, required this.imageURL});
 
+  final place, imageURL;
 
   @override
   State<PlaceDetailScreen> createState() => _PlaceDetailScreenState();
 }
 
 class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
-  bool showSpinner = false;//var cards=[categoryCard(text, color, borderColor, width)];
+  bool showSpinner =
+  false; //var cards=[categoryCard(text, color, borderColor, width)];
   final _auth = FirebaseAuth.instance;
-  int index=0;
+  int index = 0;
+
   @override
   void initState() {
-    // TODO: implement initState
-
     super.initState();
   }
-  //comments section
+
   addComment(String comment) async {
     await _firestore
         .collection('userComments')
-        .doc(session.username+widget.place+comment)
+        .doc(session.username + widget.place + comment)
         .set(
       {
-        "id":session.username+widget.place+comment,
+        "id": session.username + widget.place + comment,
         'username': session.username,
         'place': widget.place,
-        'comment':comment
+        'comment': comment
       },
-    ).then((value) {
-
-    });
+    ).then((value) {});
   }
-  // reported comment section
-  report(String id,String comment) async {
 
-    showAlertDialog(context,() async {
-      await _firestore
-          .collection('reportedComments')
-          .doc(id)
-          .set(
+  report(String id, String comment) async {
+    showAlertDialog(context, () async {
+      await _firestore.collection('reportedComments').doc(id).set(
         {
-          "id":id,
+          "id": id,
           'username': session.username,
           'place': widget.place,
-          'comment':comment
+          'comment': comment
         },
       ).then((value) {
         Navigator.pop(context);
       });
     }, "Report", "Do you want to report this comment?");
-
-
   }
 
-  //add to favorite page
-  addToFavourite(String place,String imageurl) async {
+  addToFavourite(String place, String imageurl) async {
     await _firestore
         .collection('favouritePlace')
-        .doc(session.email+place)
+        .doc(session.email + place)
         .set(
-      {
-        'email': session.email,
-        'place': place,
-        'image':imageurl
-      },
+      {'email': session.email, 'place': place, 'image': imageurl},
     ).then((value) {
       setState(() {
-        if(session.favourite.contains(place)){
-
-        }else{
+        if (session.favourite.contains(place)) {
+        } else {
           session.favourite.add(place);
-        }      });
+        }
+      });
     });
   }
-  onClick(String name,String image){
-    push(context, PlaceDetailScreen(place: name, imageURL: image,));
+
+  onClick(String name, String image) {
+    push(
+        context,
+        PlaceDetailScreen(
+          place: name,
+          imageURL: image,
+        ));
   }
+
+  final Completer<GoogleMapController> _controller =
+  Completer<GoogleMapController>();
+
+  static const CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(37.42796133580664, -122.085749655962),
+    zoom: 14.4746,
+  );
+
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar:AppBar(
-        title: Text(widget.place,style: TextStyle(color: Colors.black,fontSize: 22,fontWeight: FontWeight.bold),),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          widget.place,
+          style: TextStyle(
+              color: Colors.black, fontSize: 22, fontWeight: FontWeight.bold),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading:GestureDetector(
-            onTap:(){
-              Navigator.pop(context);                },
-            child: Icon(Icons.arrow_back_ios_new_outlined,color: kPrimaryColor,size: 30,)
-        ),
+        leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.arrow_back_ios_new_outlined,
+              color: kPrimaryColor,
+              size: 30,
+            )),
         actions: [
           GestureDetector(
-            onTap:(){
+            onTap: () {
               addToFavourite(widget.place, widget.imageURL);
             },
             child: Padding(
@@ -115,22 +127,30 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
               child: Container(
                   width: 40,
                   height: 28,
-
                   decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(100)
-                  ),
-                  child: Center(child: ImageIcon(AssetImage(session.favourite.contains(widget.place)?'images/redheart.png':'images/heart.png'),size: 30,color: session.favourite.contains(widget.place)?Colors.red:Colors.black,))),
+                      borderRadius: BorderRadius.circular(100)),
+                  child: Center(
+                      child: ImageIcon(
+                        AssetImage(session.favourite.contains(widget.place)
+                            ? 'images/redheart.png'
+                            : 'images/heart.png'),
+                        size: 30,
+                        color: session.favourite.contains(widget.place)
+                            ? Colors.red
+                            : Colors.black,
+                      ))),
             ),
           ),
         ],
         centerTitle: true,
       ),
       backgroundColor: kBackgroundColor,
-      body:SingleChildScrollView(
+      body: SingleChildScrollView(
         child: StreamBuilder<QuerySnapshot>(
-            stream: _firestore.collection('placeData')
-                .where("name",isEqualTo: widget.place)
+            stream: _firestore
+                .collection('placeData')
+                .where("name", isEqualTo: widget.place)
                 .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
@@ -143,190 +163,308 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
               }
               final placeData = snapshot.data?.docs;
               final images = placeData?.elementAt(0).get("images");
-              final data=placeData!.elementAt(0);
+              final data = placeData!.elementAt(0);
 
-
-              int length=images.length;
-
+              int length = images.length;
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.width*.70,
-                    child: Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                  SizedBox(
+                    height: MediaQuery.of(context).size.width * .70,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         GestureDetector(
-                            onTap:(){
-                              if(index>0){
+                            onTap: () {
+                              if (index > 0) {
                                 setState(() {
                                   --index;
                                 });
                               }
                             },
-                            child: Icon(Icons.arrow_back_ios_new_outlined,color: Colors.black,size: 30,)
-                        ),
+                            child: Icon(
+                              Icons.arrow_back_ios_new_outlined,
+                              color: Colors.black,
+                              size: 30,
+                            )),
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(20), // Image border
+                          borderRadius: BorderRadius.circular(20),
+                          // Image border
                           child: SizedBox.fromSize(
-                            size: Size.fromWidth(MediaQuery.of(context).size.width*.70), // Image radius
-                            child: Image.network(placeData?.elementAt(0).get("images")[index],fit: BoxFit.fill,)
+                              size: Size.fromWidth(
+                                  MediaQuery.of(context).size.width *
+                                      .70), // Image radius
+                              child: Image.network(
+                                placeData?.elementAt(0).get("images")[index],
+                                fit: BoxFit.fill,
+                              )
 
+                            //FadeInImage(image: NetworkImage(placeData?.elementAt(0).get("images")[index],), fit: BoxFit.fill, placeholder: const AssetImage("images/Boulevard.png"),),
                           ),
                         ),
                         GestureDetector(
-                            onTap:(){
-                              if(index<length-1){
+                            onTap: () {
+                              if (index < length - 1) {
                                 setState(() {
                                   index++;
                                 });
                               }
                             },
-                            child: Icon(Icons.arrow_forward_ios_outlined,color: Colors.black,size: 30,)
-                        ),
-
-                      ],),
+                            child: Icon(
+                              Icons.arrow_forward_ios_outlined,
+                              color: Colors.black,
+                              size: 30,
+                            )),
+                      ],
+                    ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(25.0),
-                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    padding: const EdgeInsets.all(18.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(children: [ImageIcon(AssetImage('images/ticket.png'),size: 35,color: Colors.black,),
-                          SizedBox(width: 5,),
-                          Text(data.get("free")=="1"?"Free":data.get("price"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold))],),
+                        Row(
+                          children: [
+                            ImageIcon(
+                              AssetImage('images/ticket.png'),
+                              size: 35,
+                              color: Colors.black,
+
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                                data.get("free") == "1"
+                                    ? "Free"
+                                    : data.get("price"),
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold))
+                          ],
+                        ),
                         Column(
                           children: [
-                            Row(children: [ImageIcon(AssetImage('images/map.png'),size: 35,color: Colors.black,),
-                              SizedBox(width: 5,),
-                              Text(data.get("location"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold))],),
-                            SizedBox(height: 5,),
+                            Row(
+                              children: [
+                                ImageIcon(
+                                  AssetImage('images/map.png'),
+                                  size: 35,
+                                  color: Colors.black,
+                                ),
+                                SizedBox(
+                                  width: 1,
+                                ),
+                                Text(data.get("location"),
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold))
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
 
-                            GestureDetector(
-                                onTap:(){
-                              MapsLauncher.launchQuery(data.get("location"));
-              },child: Padding(
-                padding: const EdgeInsets.only(left: 100.0),
-                child: Container(height:24,width:100,child: const Text("get direction",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,decoration: TextDecoration.underline))),
-              ))
-
-              ],
+                          ],
                         )
-
-
-
                       ],
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      decoration: BoxDecoration(color: kPrimaryColor,borderRadius: BorderRadius.circular(20)),
-                      height: 150,
-                      width:double.infinity,
+                      decoration: BoxDecoration(
+                          color: kPrimaryColor,
+                          borderRadius: BorderRadius.circular(20)),
+                      height: 170,
+                      width: double.infinity,
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
-                        child: Column(crossAxisAlignment:CrossAxisAlignment.start,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                          Column(crossAxisAlignment:CrossAxisAlignment.start,children: [
-                            Text("Place Details:",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
-                            SizedBox(height: 5,),
-                            Text(data.get("description"),style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold)),
-
-                          ],),
-                            Column(crossAxisAlignment:CrossAxisAlignment.start,children: [
-                              Text("Opening and closing hours:",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
-                              SizedBox(height: 5,),
-
-                              Text(data.get("time")=="1"?"24 Hours":data.get("from")+" - "+data.get("to"),style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold)),
-
-                            ],)
-
-                        ],),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Divider(thickness: 1,color: Colors.black,),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 12.0),
-                    child: Text("COMMENTS:",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4.0,vertical: 4),
-                    child: Container(
-                      height: 245,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: kPrimaryColor.withOpacity(.4),
-                          borderRadius: BorderRadius.circular(40)
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10.0,left: 15),
-                        child:   Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            smallButton("ADD COMMENT",color: kPrimaryColor, () async
-                            {
-                                  addCommentAlertDialog(context, addComment, "Add your comment:");
-                            },height: 35,fontSize:16,width: 155),
-                            SizedBox(
-                              height: 200,
-                              child: StreamBuilder<QuerySnapshot>(
-                                  stream: _firestore.collection('userComments').where("place",isEqualTo: widget.place)
-                                      .snapshots(),
-                                  builder: (context, snapshot) {
-                                    if (!snapshot.hasData) {
-                                      return const Center(
-                                        child: CircularProgressIndicator(
-                                          backgroundColor: kProgressIndicatorColor,
-                                          color: kProgressIndicatorColor,
-                                        ),
-                                      );
-                                    }
-                                    final placeData = snapshot.data?.docs;
-
-
-                                    return ListView.builder(
-                                        itemCount: placeData?.length,
-                                        padding: EdgeInsets.all(20),
-                                        itemBuilder: (BuildContext context,int index){
-
-                                          return commentCard(placeData?.elementAt(index).get("comment"),placeData?.elementAt(index).get("username"),placeData?.elementAt(index).get("id"),report,context);
-                                        }
-
-
-                                    );
-                                  }
-
-                              ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Place Details:",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(data.get("description"),
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal)),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Opening and closing hours:",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                    data.get("time") == "1"
+                                        ? "24 Hours"
+                                        : data.get("from") +
+                                        " - " +
+                                        data.get("to"),
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold)),
+                              ],
                             )
                           ],
-
                         ),
                       ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Divider(thickness: 1,color: Colors.black,),
+                    child: Divider(
+                      thickness: 1,
+                      color: Colors.black,
+                    ),
                   ),
-
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0),
-                    child: Text("RECOMENDED FOR YOU:",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
+                    child: Text("LOCATION:",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                        height: 180,
+                        width: double.infinity,
+                        child: GoogleMap(
+                          mapType: MapType.normal,
+                          markers: {
+                            Marker(
+                                markerId: MarkerId(data.get("lat").toString()),
+                                position: LatLng(data.get("lat"), data.get("lng"))
+                            )
+                          },
+                          initialCameraPosition: CameraPosition(
+                            target: LatLng(data.get("lat"), data.get("lng")),
+                            zoom: 14.4746,
+                          ),
+                          onMapCreated: (GoogleMapController controller) {
+                            _controller.complete(controller);
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Divider(
+                      thickness: 1,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0),
+                    child: Text("COMMENTS:",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 4.0, vertical: 4),
+                    child: Container(
+                      height: 245,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: kPrimaryColor.withOpacity(.4),
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10.0, left: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            smallButton("ADD COMMENT", color: kPrimaryColor,
+                                    () async {
+                                  addCommentAlertDialog(
+                                      context, addComment, "Add your comment:");
+                                }, height: 35, fontSize: 16, width: 130),
+                            SizedBox(
+                              height: 200,
+                              child: StreamBuilder<QuerySnapshot>(
+                                  stream: _firestore
+                                      .collection('userComments')
+                                      .where("place", isEqualTo: widget.place)
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(
+                                          backgroundColor:
+                                          kProgressIndicatorColor,
+                                          color: kProgressIndicatorColor,
+                                        ),
+                                      );
+                                    }
+                                    final placeData = snapshot.data?.docs;
+
+                                    return ListView.builder(
+                                        itemCount: placeData?.length,
+                                        padding: EdgeInsets.all(20),
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return commentCard(
+                                              placeData
+                                                  ?.elementAt(index)
+                                                  .get("comment"),
+                                              placeData
+                                                  ?.elementAt(index)
+                                                  .get("username"),
+                                              placeData
+                                                  ?.elementAt(index)
+                                                  .get("id"),
+                                              report,
+                                              context);
+                                        });
+                                  }),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Divider(
+                      thickness: 1,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0),
+                    child: Text("RECOMENDED FOR YOU:",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
                   ),
                   StreamBuilder<QuerySnapshot>(
-                      stream:_firestore
+                      stream: _firestore
                           .collection('placeData')
-                          .where("city",isEqualTo: session.city)
-                          .where('type',whereIn:session.interests)
-                          .where("name",isNotEqualTo: widget.place)
+                          .where("city", isEqualTo: session.city)
+                          .where('type', whereIn: session.interests)
+                          .where("name", isNotEqualTo: widget.place)
                           .snapshots(),
-
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {
                           return const Center(
@@ -338,31 +476,32 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                         }
                         final placeData = snapshot.data?.docs;
 
-
                         return Container(
-                          height: 175,
+                          height: 172,
                           child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                          itemCount: placeData?.length,
-                          padding: EdgeInsets.all(10),
-                          itemBuilder: (BuildContext context,int index){
-
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 17),
-                              child: PlaceCard(imagePath:placeData?.elementAt(index).get("images"),placeName: placeData?.elementAt(index).get("name"),likeClick: addToFavourite,imageClick: onClick),
-                            );
-                          }
-                          ),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: placeData?.length,
+                              padding: EdgeInsets.all(15),
+                              itemBuilder: (BuildContext context, int index) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 7),
+                                  child: PlaceCard(
+                                      imagePath: placeData
+                                          ?.elementAt(index)
+                                          .get("images"),
+                                      placeName: placeData
+                                          ?.elementAt(index)
+                                          .get("name"),
+                                      likeClick: addToFavourite,
+                                      imageClick: onClick),
+                                );
+                              }),
                         );
-                      }
-
-                  ),
-
+                      }),
                 ],
               );
-            }
-
-        ),
+            }),
       ),
     );
   }

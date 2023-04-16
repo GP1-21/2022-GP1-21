@@ -24,6 +24,7 @@ class PlaceDetailScreen extends StatefulWidget {
   State<PlaceDetailScreen> createState() => _PlaceDetailScreenState();
 }
 
+
 class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
   bool showSpinner =
   false; //var cards=[categoryCard(text, color, borderColor, width)];

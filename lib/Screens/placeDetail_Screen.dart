@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:huna_ksa/Components/common_Functions.dart';
 import 'package:huna_ksa/Screens/main_Screen.dart';
 import 'package:huna_ksa/Screens/profile_Screen.dart';
@@ -17,25 +14,24 @@ final _firestore = FirebaseFirestore.instance;
 
 class PlaceDetailScreen extends StatefulWidget {
   PlaceDetailScreen({required this.place, required this.imageURL});
-
   final place, imageURL;
 
   @override
   State<PlaceDetailScreen> createState() => _PlaceDetailScreenState();
 }
 
-
 class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
   bool showSpinner =
-  false; //var cards=[categoryCard(text, color, borderColor, width)];
+      false;
   final _auth = FirebaseAuth.instance;
   int index = 0;
-
   @override
   void initState() {
+
     super.initState();
   }
 
+  //comments section
   addComment(String comment) async {
     await _firestore
         .collection('userComments')
@@ -50,6 +46,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
     ).then((value) {});
   }
 
+  // reported comment section
   report(String id, String comment) async {
     showAlertDialog(context, () async {
       await _firestore.collection('reportedComments').doc(id).set(
@@ -65,6 +62,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
     }, "Report", "Do you want to report this comment?");
   }
 
+  //add place to favorite page
   addToFavourite(String place, String imageurl) async {
     await _firestore
         .collection('favouritePlace')
@@ -89,14 +87,6 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
           imageURL: image,
         ));
   }
-
-  final Completer<GoogleMapController> _controller =
-  Completer<GoogleMapController>();
-
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -131,22 +121,24 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(100)),
+                  // favorite button
                   child: Center(
                       child: ImageIcon(
-                        AssetImage(session.favourite.contains(widget.place)
-                            ? 'images/redheart.png'
-                            : 'images/heart.png'),
-                        size: 30,
-                        color: session.favourite.contains(widget.place)
-                            ? Colors.red
-                            : Colors.black,
-                      ))),
+                    AssetImage(session.favourite.contains(widget.place)
+                        ? 'images/redheart.png'
+                        : 'images/heart.png'),
+                    size: 30,
+                    color: session.favourite.contains(widget.place)
+                        ? Colors.red
+                        : Colors.black,
+                  ))),
             ),
           ),
         ],
         centerTitle: true,
       ),
       backgroundColor: kBackgroundColor,
+      //place details (name,images,description,location)
       body: SingleChildScrollView(
         child: StreamBuilder<QuerySnapshot>(
             stream: _firestore
@@ -190,8 +182,9 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                               size: 30,
                             )),
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          // Image border
+                          //image style
+                          borderRadius:
+                              BorderRadius.circular(20), // Image border
                           child: SizedBox.fromSize(
                               size: Size.fromWidth(
                                   MediaQuery.of(context).size.width *
@@ -199,10 +192,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                               child: Image.network(
                                 placeData?.elementAt(0).get("images")[index],
                                 fit: BoxFit.fill,
-                              )
-
-                            //FadeInImage(image: NetworkImage(placeData?.elementAt(0).get("images")[index],), fit: BoxFit.fill, placeholder: const AssetImage("images/Boulevard.png"),),
-                          ),
+                              )),
                         ),
                         GestureDetector(
                             onTap: () {
@@ -217,6 +207,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                               color: Colors.black,
                               size: 30,
                             )),
+
                       ],
                     ),
                   ),
@@ -232,7 +223,6 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                               AssetImage('images/ticket.png'),
                               size: 35,
                               color: Colors.black,
-
                             ),
                             SizedBox(
                               width: 5,
@@ -278,7 +268,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                       decoration: BoxDecoration(
                           color: kPrimaryColor,
                           borderRadius: BorderRadius.circular(20)),
-                      height: 170,
+                      height: 150,
                       width: double.infinity,
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
@@ -299,7 +289,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                                 Text(data.get("description"),
                                     style: TextStyle(
                                         fontSize: 14,
-                                        fontWeight: FontWeight.normal)),
+                                        fontWeight: FontWeight.bold)),
                               ],
                             ),
                             Column(
@@ -316,8 +306,8 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                                     data.get("time") == "1"
                                         ? "24 Hours"
                                         : data.get("from") +
-                                        " - " +
-                                        data.get("to"),
+                                            " - " +
+                                            data.get("to"),
                                     style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold)),
@@ -336,40 +326,39 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                     ),
                   ),
                   Padding(
+                    //comments section
                     padding: const EdgeInsets.only(left: 12.0),
-                    child: Text("LOCATION:",
+                    child: Text("COMMENTS:",
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold)),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Container(
-                        height: 180,
-                        width: double.infinity,
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0,),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      height: 180,
+                      width: double.infinity,
                         child: GoogleMap(
-                          mapType: MapType.normal,
-                          markers: {
-                            Marker(
-                                markerId: MarkerId(data.get("lat").toString()),
-                                position: LatLng(data.get("lat"), data.get("lng"))
-                            )
-                          },
-                          initialCameraPosition: CameraPosition(
-                            target: LatLng(data.get("lat"), data.get("lng")),
-                            zoom: 14.4746,
-                          ),
-                          onMapCreated: (GoogleMapController controller) {
-                            _controller.complete(controller);
-                          },
+                        mapType: MapType.normal,
+                        markers: {
+                        Marker(
+                        markerId: MarkerId(data.get("lat").toString()),
+                        position: LatLng(data.get("lat"), data.get("lng"))
+                        )
+                        },
+                        initialCameraPosition: CameraPosition(
+                        target: LatLng(data.get("lat"), data.get("lng")),
+                        zoom: 14.4746,
                         ),
-                      ),
-                    ),
-                  ),
+                        onMapCreated: (GoogleMapController controller) {
+                        _controller.complete(controller);
+                        },
+                        ),
+                        ),
+                        ),
+                        ),
+
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Divider(
@@ -447,13 +436,14 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Divider(
                       thickness: 1,
                       color: Colors.black,
                     ),
                   ),
                   Padding(
+                    //Recommendation section
                     padding: const EdgeInsets.only(left: 12.0),
                     child: Text("RECOMENDED FOR YOU:",
                         style: TextStyle(
@@ -478,7 +468,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                         final placeData = snapshot.data?.docs;
 
                         return Container(
-                          height: 172,
+                          height: 175,
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: placeData?.length,
@@ -486,7 +476,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                               itemBuilder: (BuildContext context, int index) {
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 7),
+                                      horizontal: 17),
                                   child: PlaceCard(
                                       imagePath: placeData
                                           ?.elementAt(index)

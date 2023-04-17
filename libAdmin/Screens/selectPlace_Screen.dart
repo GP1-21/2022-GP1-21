@@ -19,7 +19,7 @@ class SelectPlaceScreen extends StatefulWidget {
   @override
   State<SelectPlaceScreen> createState() => _SelectPlaceScreenState();
 }
-
+//Selecting place to Delete or Edit
 class _SelectPlaceScreenState extends State<SelectPlaceScreen> {
   @override
   Widget build(BuildContext context) {
@@ -53,6 +53,7 @@ class _SelectPlaceScreenState extends State<SelectPlaceScreen> {
             ),
           ),
           Expanded(
+            //returning places from firebase
             child: StreamBuilder<QuerySnapshot>(
                 stream: _firestore
                     .collection('placeData')
@@ -78,8 +79,8 @@ class _SelectPlaceScreenState extends State<SelectPlaceScreen> {
                         borderRadius: BorderRadius.circular(15),
                         color: kPrimaryColor,
                       ),
+                      //Array of places
                       child: ListView.builder(
-                          //scrollDirection: Axis.horizontal,
 
                           //select a place to edit 
                           itemCount: placeData?.length,
@@ -89,7 +90,7 @@ class _SelectPlaceScreenState extends State<SelectPlaceScreen> {
                                   if (widget.fromScreen == "edit") {
                                     push(
                                       context,
-                                      EditScreen(
+                                      EditScreen(  //Return the place fields to Editscreen
                                         city: widget.city,
                                         category: placeData
                                             ?.elementAt(index)
@@ -134,7 +135,7 @@ class _SelectPlaceScreenState extends State<SelectPlaceScreen> {
                                     );
                                   }
     else if(widget.fromScreen=="comment")
-    {
+    { //Delete comment page
     push(context, DeleteCommentScreen(place: placeData?.elementAt(index).get("name")));
     }
     },

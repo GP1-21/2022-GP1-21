@@ -85,7 +85,13 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
           imageURL: image,
         ));
   }
+  final Completer<GoogleMapController> _controller =
+  Completer<GoogleMapController>();
 
+  static const CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(37.42796133580664, -122.085749655962),
+    zoom: 14.4746,
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -267,7 +273,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                       decoration: BoxDecoration(
                           color: kPrimaryColor,
                           borderRadius: BorderRadius.circular(20)),
-                      height: 150,
+                      height: 170,
                       width: double.infinity,
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
@@ -327,9 +333,12 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                   Padding(
                     //comments section
                     padding: const EdgeInsets.only(left: 12.0),
-                    child: Text("COMMENTS:",
+                    child: Text("LOCATION:",
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold)),
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12.0,),
@@ -352,12 +361,11 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                         ),
                         onMapCreated: (GoogleMapController controller) {
                         _controller.complete(controller);
-                        },
+                              },
+                             ),
+                            ),
+                           ),
                         ),
-                        ),
-                        ),
-                        ),
-
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Divider(
@@ -435,7 +443,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: Divider(
                       thickness: 1,
                       color: Colors.black,
@@ -467,7 +475,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                         final placeData = snapshot.data?.docs;
 
                         return Container(
-                          height: 175,
+                          height: 172,
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: placeData?.length,
@@ -475,7 +483,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                               itemBuilder: (BuildContext context, int index) {
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 17),
+                                      horizontal: 7),
                                   child: PlaceCard(
                                       imagePath: placeData
                                           ?.elementAt(index)

@@ -28,6 +28,7 @@ class AddScreen extends StatefulWidget {
 
 class _AddScreenState extends State<AddScreen> {
   String btnText = "Choose files";
+  //Setting controller for editable text field
   TextEditingController nameController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -46,7 +47,7 @@ class _AddScreenState extends State<AddScreen> {
   String category = "General", type = "Recreational Sites";
 
   bool showSpinner = false,time=false,priceCheck=false;
-
+  //Picking muliple image for a place
   Future pickImage() async {
     try {
       images = await ImagePicker().pickMultiImage(requestFullMetadata: true);
@@ -54,7 +55,7 @@ class _AddScreenState extends State<AddScreen> {
       print('Failed to pick image: $e');
     }
   }
-
+  // Adding required details of each place then submit
   Future submit() async {
     if (nameController.text == "") {
       tost(context, "Please type place name");
@@ -71,6 +72,7 @@ class _AddScreenState extends State<AddScreen> {
     } else if (time==false && toController.text == "") {
       tost(context, "Please type time 'to'");
     } else {
+      //After adding details and clicking submit to save then clear the fields
       session.imagesURLList.clear();
       setState(() {
         showSpinner = true;
@@ -78,6 +80,7 @@ class _AddScreenState extends State<AddScreen> {
       await saveStorage(nameController.text);
     }
   }
+  //Storing the place in the database
   Future saveStorage(String name) async {
     if (images.isEmpty) return;
     for (int i = 0; i < images.length; i++) {
@@ -95,6 +98,7 @@ class _AddScreenState extends State<AddScreen> {
   double lat = 0.0;
   double lng = 0.0;
 
+  // Storing the place data in the placeData collection on Firebase
   Future saveData() async {
     await _firestore.collection('placeData').doc(nameController.text).set(
       {
@@ -121,7 +125,7 @@ tost(context, "${nameController.text} added successfully");
   }
 
 
-
+  //style of the page
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -355,13 +359,13 @@ tost(context, "${nameController.text} added successfully");
                         const SizedBox(width:6,),
                         RoundedButton(
                           decuration: TextDecoration.underline,
-                          title: "Select On map",
+                          title: "Select On map", //Select the place on map by a marker
                           color: kPrimaryColor,
                           onPress: () async {
                             LocationResult result =
                             await Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => PlacePicker(
-                                  "AIzaSyAuJYLmzmglhCpBYTn0BjbJhjWYg0fPEEA",
+                                  "AIzaSyAuJYLmzmglhCpBYTn0BjbJhjWYg0fPEEA", //Google map API key
                                   displayLocation: LatLng(23.8859, 45.0792),
                                 )));
 
@@ -369,7 +373,7 @@ tost(context, "${nameController.text} added successfully");
                             lng = result.latLng!.longitude;
                             locationController =
                                 TextEditingController(text: result.name.toString());
-                            setState(() {});
+                            setState(() {}); //Setting the selected location
                           },
                           textColor: Colors.blue,
                           height: 10,
@@ -450,6 +454,7 @@ tost(context, "${nameController.text} added successfully");
       ),
     );
   }
+  //After submiting the place and storing in firebase then clear the fields
   clearData(){
     setState(() {
       category = "General";
@@ -509,7 +514,6 @@ tost(context, "${nameController.text} added successfully");
                 child: Center(
                     child: Text(
                   value,
-                  //style: kSimpleButtonTextStyle,
                 )),
               );
             }).toList(),

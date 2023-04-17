@@ -22,7 +22,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool obscure = true;
   bool showSpinner = false;
-  final emailController = TextEditingController();
+  final emailController = TextEditingController(); //controller for editable text field
 
   final passwordController = TextEditingController();
 
@@ -104,7 +104,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                   ),
-                  //SizedBox(height: ,),
                   Align(
                     alignment: Alignment.topLeft,
                     child: TextButton(
@@ -152,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
+  // Return user data after login successfully
   Future getCurrentUser() async {
     try {
       final user = await _auth.currentUser;
@@ -178,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   LogIn() async {
-    try {
+    try { //Email text field
       if (emailController.text == "") {
         myNotifier(context, "Please enter your Email.", function: () {});
         setState(() {
@@ -236,7 +235,7 @@ class _LoginScreenState extends State<LoginScreen> {
       });
     }
   }
-
+  // Reset password with email
   resetPassword() async {
     try {
       if (emailController.text == "") {
@@ -251,6 +250,7 @@ class _LoginScreenState extends State<LoginScreen> {
         });
 
         await _auth
+              //Sending password reset email to the given email adress
             .sendPasswordResetEmail(email: emailController.text)
             .then((value) {
           setState(() {

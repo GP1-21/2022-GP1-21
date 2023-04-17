@@ -19,6 +19,7 @@ class PlaceDetailScreen extends StatefulWidget {
   @override
   State<PlaceDetailScreen> createState() => _PlaceDetailScreenState();
 }
+
 class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
   bool showSpinner =
       false;

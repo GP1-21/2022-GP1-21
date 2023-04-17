@@ -77,7 +77,6 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
       });
     });
   }
-
   onClick(String name, String image) {
     push(
         context,

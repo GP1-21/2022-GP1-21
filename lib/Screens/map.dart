@@ -40,7 +40,7 @@ class _MapViewState extends State<MapView> {
 
   @override
   void initState() {
-    //determining the postion based on value of latitude and longitude
+    //determining the postion based on value latitude and longitude
     LocationHelper().determinePosition().then((value) {
       lat = value.latitude;
       lng = value.longitude;

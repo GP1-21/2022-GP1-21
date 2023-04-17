@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:huna_ksa/Components/common_Functions.dart';
 import 'package:huna_ksa/Screens/main_Screen.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:huna_ksa/Screens/profile_Screen.dart';
 import 'package:huna_ksa/Widgets/rounded_Button.dart';
 import 'package:huna_ksa/Widgets/place_Card.dart';
@@ -30,7 +31,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
     super.initState();
   }
 
-  //comments section
+  // adding comments in place details with username and storing in firebase
   addComment(String comment) async {
     await _firestore
         .collection('userComments')
@@ -45,7 +46,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
     ).then((value) {});
   }
 
-  // reported comment section
+  // reporting the comment by user(tourist)
   report(String id, String comment) async {
     showAlertDialog(context, () async {
       await _firestore.collection('reportedComments').doc(id).set(
@@ -58,10 +59,10 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
       ).then((value) {
         Navigator.pop(context);
       });
-    }, "Report", "Do you want to report this comment?");
+    }, "Report", "Do you want to report this comment?"); //Message appear to user(tourist) after click on report icon to ensure the reporting
   }
 
-  //add place to favorite page
+  //adding the place to favorite page by click on heart icon and storing in firebase
   addToFavourite(String place, String imageurl) async {
     await _firestore
         .collection('favouritePlace')
@@ -77,6 +78,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
       });
     });
   }
+  //adding the place to favoirte page with the name and image of the place
   onClick(String name, String image) {
     push(
         context,
@@ -85,13 +87,15 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
           imageURL: image,
         ));
   }
+  //Map section
   final Completer<GoogleMapController> _controller =
   Completer<GoogleMapController>();
-
+  //the position of the map (camera) based on lat and lng
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
   );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,7 +147,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
       ),
       backgroundColor: kBackgroundColor,
       //place details (name,images,description,location)
-      body: SingleChildScrollView(
+      body: SingleChildScrollView( //creating a box which a widget can be scrolled
         child: StreamBuilder<QuerySnapshot>(
             stream: _firestore
                 .collection('placeData')
@@ -161,7 +165,6 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
               final placeData = snapshot.data?.docs;
               final images = placeData?.elementAt(0).get("images");
               final data = placeData!.elementAt(0);
-
               int length = images.length;
 
               return Column(
@@ -185,7 +188,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                               color: Colors.black,
                               size: 30,
                             )),
-                        ClipRRect(
+                        ClipRRect( //Rounded rectangular clip
                           //image style
                           borderRadius:
                               BorderRadius.circular(20), // Image border
@@ -198,7 +201,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                                 fit: BoxFit.fill,
                               )),
                         ),
-                        GestureDetector(
+                        GestureDetector( //widget to detect gesture
                             onTap: () {
                               if (index < length - 1) {
                                 setState(() {
@@ -331,7 +334,6 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                     ),
                   ),
                   Padding(
-                    //comments section
                     padding: const EdgeInsets.only(left: 12.0),
                     child: Text("LOCATION:",
                         style: TextStyle(
@@ -344,23 +346,23 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 12.0,),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      height: 180,
-                      width: double.infinity,
-                        child: GoogleMap(
-                        mapType: MapType.normal,
-                        markers: {
-                        Marker(
-                        markerId: MarkerId(data.get("lat").toString()),
-                        position: LatLng(data.get("lat"), data.get("lng"))
-                        )
-                        },
-                        initialCameraPosition: CameraPosition(
-                        target: LatLng(data.get("lat"), data.get("lng")),
-                        zoom: 14.4746,
-                        ),
-                        onMapCreated: (GoogleMapController controller) {
-                        _controller.complete(controller);
+                        child: Container(
+                            height: 180,
+                            width: double.infinity,
+                              child: GoogleMap(
+                              mapType: MapType.normal,
+                              markers: {
+                              Marker(
+                              markerId: MarkerId(data.get("lat").toString()),
+                              position: LatLng(data.get("lat"), data.get("lng"))
+                              )
+                              },
+                              initialCameraPosition: CameraPosition(
+                              target: LatLng(data.get("lat"), data.get("lng")),
+                              zoom: 14.4746,
+                              ),
+                              onMapCreated: (GoogleMapController controller) {
+                              _controller.complete(controller);
                               },
                              ),
                             ),

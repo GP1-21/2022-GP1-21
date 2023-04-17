@@ -61,13 +61,63 @@ showAlertDialog(BuildContext context,Function yesFunction,String title,String te
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Center(child: Text(text,style: TextStyle(fontSize: 27),textAlign: TextAlign.center,)
-                  //       TextField(
-                  //       decoration: InputDecoration(
-                  //       hintText: "Add Review",
-                  //       border: InputBorder.none,
-                  //     ),
-                  //   maxLines: 8,
-                  // ),
+                ),
+              )),
+
+
+          backgroundColor: Colors.white,
+          actions: [
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            yesButton,
+            noButton,
+          ],
+        ),
+        ],
+        ),
+      );
+    },
+  );
+}
+addCommentAlertDialog(BuildContext context,Function yesFunction,String title) {
+  TextEditingController controller =TextEditingController();
+  Widget yesButton = TextButton(
+      child: const Text("Add",style: TextStyle(color: kPrimaryColor,fontWeight: FontWeight.bold,fontSize: 20),),
+      onPressed:()async {
+        if(controller.text.isNotEmpty){
+          await yesFunction(controller.text);
+          Navigator.pop(context);}
+        else{
+        }
+
+      }
+  );
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Container(
+        child: AlertDialog(
+
+          title: Text("Add your comment:",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 25),),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(32.0))),
+          contentPadding: EdgeInsets.only(top: 10.0),
+          content: Container(
+              width:MediaQuery.of(context).size.width*.90,
+              height: 140.0,
+              decoration: new BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: new BorderRadius.all(new Radius.circular(32.0)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50.0,vertical: 10),
+                child: Center(child:
+                //Text(text,style: TextStyle(fontSize: 27),textAlign: TextAlign.center,)
+                TextField(
+                  controller: controller,
+                  decoration: kAddTextFieldDecoration,
+                  maxLines: 4,
+                ),
                 ),
               )),
 
@@ -81,7 +131,6 @@ showAlertDialog(BuildContext context,Function yesFunction,String title,String te
     },
   );
 }
-
 
 
 tost(BuildContext context,String text,[int duration =2])

@@ -27,7 +27,6 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
   int index = 0;
   @override
   void initState() {
-
     super.initState();
   }
 

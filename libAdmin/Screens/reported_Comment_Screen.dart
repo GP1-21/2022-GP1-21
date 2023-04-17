@@ -18,7 +18,7 @@ class ReportedCommentScreen extends StatefulWidget {
   @override
   State<ReportedCommentScreen> createState() => _ReportedCommentScreenState();
 }
-
+//Delete reported comments from firebase
 class _ReportedCommentScreenState extends State<ReportedCommentScreen> {
 deleteComment(String id) async {
        await _firestore.collection('userComments').doc(id).delete();
@@ -36,7 +36,7 @@ deleteReportedComment(String id) async {
         title: const Text("Reported Comment",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25,color: Colors.black),),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: GestureDetector(
+        leading: GestureDetector( //widget detect gesture
           onTap: (){
             Navigator.pop(context,"");
           },
@@ -67,10 +67,8 @@ deleteReportedComment(String id) async {
                   color: kPrimaryColor,
 
                 ),
+                //Array of reported comments
                 child: ListView.builder(
-                  //scrollDirection: Axis.horizontal,
-
-                    //padding: const EdgeInsets.only(left: 16, right:16),
                     itemCount: placeData?.length,
                     itemBuilder: (BuildContext listContext, int index) {
 

@@ -333,6 +333,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                       color: Colors.black,
                     ),
                   ),
+                  //Location of the place (marker of the place in map based on lat and lng)
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0),
                     child: Text("LOCATION:",
@@ -361,6 +362,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                               target: LatLng(data.get("lat"), data.get("lng")),
                               zoom: 14.4746,
                               ),
+                                //method when map is ready to use
                               onMapCreated: (GoogleMapController controller) {
                               _controller.complete(controller);
                               },
@@ -375,6 +377,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                       color: Colors.black,
                     ),
                   ),
+                  //Comment section of the place
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0),
                     child: Text("COMMENTS:",
@@ -395,6 +398,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            //user(tourist) add comment with username
                             smallButton("ADD COMMENT", color: kPrimaryColor,
                                     () async {
                                   addCommentAlertDialog(
@@ -418,7 +422,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                                       );
                                     }
                                     final placeData = snapshot.data?.docs;
-
+                                    //Array of comments from different users(tourists)
                                     return ListView.builder(
                                         itemCount: placeData?.length,
                                         padding: EdgeInsets.all(20),
@@ -452,7 +456,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                     ),
                   ),
                   Padding(
-                    //Recommendation section
+                    //Recommending places for user(tourist) based on his/her intereset in this section
                     padding: const EdgeInsets.only(left: 12.0),
                     child: Text("RECOMENDED FOR YOU:",
                         style: TextStyle(
@@ -476,7 +480,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                         }
                         final placeData = snapshot.data?.docs;
 
-                        return Container(
+                        return Container( //style of the recommended places
                           height: 172,
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,

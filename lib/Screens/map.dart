@@ -9,10 +9,8 @@ import 'package:huna_ksa/Screens/placeDetail_Screen.dart';
 import 'package:huna_ksa/Widgets/favourite_Card.dart';
 import 'package:huna_ksa/model/place.dart';
 import 'package:huna_ksa/services/places.dart';
-
 import '../Components/common_Functions.dart';
 import 'package:provider/provider.dart';
-
 import '../Components/location_helper.dart';
 
 final _firestore = FirebaseFirestore.instance;
@@ -25,6 +23,7 @@ class MapView extends StatefulWidget {
 }
 
 class _MapViewState extends State<MapView> {
+  //producing future object to complete them later with value
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 //Creates a immutable representation of the GoogleMap camera based on lat and lng
@@ -32,17 +31,16 @@ class _MapViewState extends State<MapView> {
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
   );
-
+  //latitude and longitude
   double lat = 0.0;
   double lng = 0.0;
-  //markers to set on the map
+  //seting the markers to set on the map
   Set<Marker> _marker = {};
-
   bool showData = false;
 
   @override
   void initState() {
-    //determine the postion based on latitude and longitude
+    //determining the postion based on value of latitude and longitude
     LocationHelper().determinePosition().then((value) {
       lat = value.latitude;
       lng = value.longitude;
@@ -57,7 +55,7 @@ class _MapViewState extends State<MapView> {
                 double.parse(e.lat.toString()),
                 double.parse(e.lng.toString()),
               )));
-        }).toList();
+        }).toList(); //puting the markers in list
         showData = true;
         setState(() {});
       });

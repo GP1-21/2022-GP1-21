@@ -87,15 +87,11 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
           imageURL: image,
         ));
   }
-  //Map section
+  //Map section 
+  //responsibel for displaying the user current location
   final Completer<GoogleMapController> _controller =
   Completer<GoogleMapController>();
-  //the position of the map (camera) based on lat and lng
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

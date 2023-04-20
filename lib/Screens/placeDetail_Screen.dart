@@ -88,7 +88,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
         ));
   }
   //Map section 
-  //responsibel for displaying the user current location
+  //responsibel for displaying the map
   final Completer<GoogleMapController> _controller =
   Completer<GoogleMapController>();
   

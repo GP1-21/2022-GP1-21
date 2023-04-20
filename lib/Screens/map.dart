@@ -23,14 +23,11 @@ class MapView extends StatefulWidget {
 }
 
 class _MapViewState extends State<MapView> {
+  
   //producing future object to complete them later with value
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
-//Creates a immutable representation of the GoogleMap camera based on lat and lng
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
+
   //latitude and longitude
   double lat = 0.0;
   double lng = 0.0;
@@ -40,11 +37,12 @@ class _MapViewState extends State<MapView> {
 
   @override
   void initState() {
-    //determining the postion based on value latitude and longitude
+    //determining the postion based on value latitude and longitude from the user location
     LocationHelper().determinePosition().then((value) {
       lat = value.latitude;
       lng = value.longitude;
       setState(() {});
+      
       //function for provide list of markers
       PlacesServices().getPlaces().then((value) {
         value.map((e) {
@@ -78,7 +76,7 @@ class _MapViewState extends State<MapView> {
             myLocationEnabled: true,
             zoomControlsEnabled: false,
             initialCameraPosition: CameraPosition(
-                target: LatLng(lat, lng), zoom: 14.151926040649414),
+                target: LatLng(lat, lng), zoom: 14.151926040649414), //the user location
             onMapCreated: (GoogleMapController controller) {
               _controller.complete(controller);
             },

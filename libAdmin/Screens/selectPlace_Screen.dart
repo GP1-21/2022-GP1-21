@@ -46,9 +46,9 @@ class _SelectPlaceScreenState extends State<SelectPlaceScreen> {
             height: 10,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 10.0),
+            padding: const EdgeInsets.only(left: 30.0),
             child: Text(
-              "Select the place:",
+              "SELECT PLACE:",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
@@ -73,7 +73,7 @@ class _SelectPlaceScreenState extends State<SelectPlaceScreen> {
 
                   return Padding(
                     padding: const EdgeInsets.only(
-                        top: 30, bottom: 30, left: 16, right: 16),
+                        top: 15, bottom: 30, left: 16, right: 16),
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),

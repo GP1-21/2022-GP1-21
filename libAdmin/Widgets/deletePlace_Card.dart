@@ -13,7 +13,7 @@ Widget DeletePlaceCard(List imagePaths,String placeName,Function delete,BuildCon
         borderRadius: BorderRadius.circular(15)
 
     ),
-    height: 170,
+    height: 155,
     width: double.infinity,
     child: Stack(
       children: [
@@ -79,7 +79,7 @@ Widget DeleteCommentCard(String username,String comment,String placeName,Functio
           ),
           Padding(
             padding: const EdgeInsets.only(top: 20,),
-            child: SizedBox(width:MediaQuery.of(context).size.width*.75,child: Divider(thickness: .7,color: Colors.black,)),
+            child: SizedBox(width:MediaQuery.of(context).size.width*.95,child: Divider(thickness: .7,color: Colors.black12,)),
           )
 
         ],

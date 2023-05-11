@@ -39,8 +39,8 @@ class _AddScreenState extends State<AddScreen> {
   final Completer<GoogleMapController> _controller = Completer();
 
   static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
+    target: LatLng(24.708614,46.674792),
+    zoom: 16,
   );
 
   var images;
@@ -170,13 +170,13 @@ tost(context, "${nameController.text} added successfully");
                         Text(
                           "Place name:",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
+                              fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         SizedBox(
-                          width: 10,
+                          width: 5,
                         ),
                         SizedBox(
-                            width: 230,
+                            width: 210,
                             height: 50,
                             child: inputText(nameController, TextInputType.text,
                                 "Place Name")),
@@ -190,10 +190,10 @@ tost(context, "${nameController.text} added successfully");
                         Text(
                           "Place photos:",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
+                              fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 5,
                         ),
                         RoundedButton(
                           decuration: TextDecoration.underline,
@@ -204,7 +204,7 @@ tost(context, "${nameController.text} added successfully");
                           },
                           textColor: Colors.blue,
                           height: 30,
-                          horizontal: 10,
+                          horizontal: 5,
                         ),
                         SizedBox(
                           height: 20,
@@ -221,7 +221,7 @@ tost(context, "${nameController.text} added successfully");
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                       SizedBox(
-                        width: 10,
+                        width: 5,
                       ),
                       dropDownalertBeforedays(category,"category", <String>[
                         'General',
@@ -237,10 +237,10 @@ tost(context, "${nameController.text} added successfully");
                       Text(
                         "Place type:",
                         style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                       SizedBox(
-                        width: 10,
+                        width: 5,
                       ),
                       dropDownalertBeforedays(type,"type", <String>[
                         'Recreational Sites',
@@ -251,7 +251,7 @@ tost(context, "${nameController.text} added successfully");
                         "Beach",
                         "Spa",
                         "Parks"
-                      ],230),
+                      ],210),
                     ],),
                     SizedBox(
                       height: 20,
@@ -261,26 +261,29 @@ tost(context, "${nameController.text} added successfully");
                         Text(
                           "Ticket price:",
                           style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         SizedBox(
                           width: 10,
                         ),
                         SizedBox(
-                            width: 100,
+                            width: 90,
                             height: 50,
                             child: inputText(priceController, TextInputType.text,
-                                "Price")),
+                                "Price" , !priceCheck)),
 
                         Container(
-                          width: 130,
+                          width: 120,
                           child: CheckboxListTile(
                             activeColor: Colors.white,
                             checkColor: Colors.black,
-                            title: Text("Free",style: kTextStyle,),
+                            title: Text(
+                              "Free",
+                              style: kTextStyle,),
                             value: priceCheck,
                             onChanged: (newValue) {
                               setState(() {
+                                priceController.clear();
                                 priceCheck = newValue!;
                               });
                             },
@@ -297,16 +300,16 @@ tost(context, "${nameController.text} added successfully");
                         Text(
                           "Description:",
                           style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         SizedBox(
-                          width: 10,
+                          width: 15,
                         ),
                         SizedBox(
-                            width: 240,
+                            width: 195,
                             height: 50,
                             child: inputText(descriptionController, TextInputType.text,
-                                "Description")),
+                                "Description"m true)),
                       ],
                     ),
                     SizedBox(
@@ -319,10 +322,10 @@ tost(context, "${nameController.text} added successfully");
                         const Text(
                           "Location:",
                           style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         const SizedBox(
-                          width: 5,
+                          width: 15,
                         ),
                         Row(
                           children: [
@@ -334,7 +337,7 @@ tost(context, "${nameController.text} added successfully");
                                 decoration: InputDecoration(
                                   hintText:"select location",
                                   enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(15),
                                       borderSide: BorderSide.none),
                                   focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
@@ -352,21 +355,21 @@ tost(context, "${nameController.text} added successfully");
                     Row(
                       children: [
                         const Text(
-                          "Select on map:",
+                          "Select on Map:",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         const SizedBox(width:6,),
                         RoundedButton(
                           decuration: TextDecoration.underline,
-                          title: "Select On map", //Select the place on map by a marker
+                          title: "Select On Map", //Select the place on map by a marker
                           color: kPrimaryColor,
                           onPress: () async {
                             LocationResult result =
                             await Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => PlacePicker(
                                   "AIzaSyAuJYLmzmglhCpBYTn0BjbJhjWYg0fPEEA", //Google map API key
-                                  displayLocation: LatLng(23.8859, 45.0792),
+                                  displayLocation: LatLng(24.713447, 46.675209),
                                 )));
 
                             lat = result.latLng!.latitude;
@@ -388,7 +391,7 @@ tost(context, "${nameController.text} added successfully");
                     Text(
                       "Opening and closing hours:",
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                     SizedBox(
                       height: 10,
@@ -398,14 +401,14 @@ tost(context, "${nameController.text} added successfully");
                           width: 100,
                           height: 50,
                           child: inputText(fromController, TextInputType.text,
-                              "12:00")),
+                              "12:00" ,!time)),
 
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "to",
+                          "TO",
                           style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                       ),
                       SizedBox(
@@ -434,15 +437,15 @@ tost(context, "${nameController.text} added successfully");
                   alignment: Alignment.centerRight,
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        top: 30, left: 10, right: 10, bottom: 30),
+                        top: 10, left: 10, right: 85, bottom: 10),
                     child: RoundedButton(
-                      title: "Submit",
+                      title: "SUBMIT",
                       color: kPrimaryColor,
                       onPress: () async {
                         submit();
                       },
                       textColor: Colors.black,
-                      height: 20,
+                      height: 50,
                       horizontal: 0,
                     ),
                   ),

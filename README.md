@@ -33,8 +33,8 @@ Steps for Android phone :
 3. Open the App in your phone.  
 
 Admin application login credntials: 
-username: admin 
-password: admin1234
+- username: admin 
+- password: admin1234
 
 User application login credntials:
 - create your own account using (Email, Username, Password)

@@ -127,15 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       textColor: Colors.white,
                       onPress: () async {
                         await LogIn();
-                      //   if(usernameController.text=="admin" && passwordController.text=="admin") {
-                      //     usernameController.clear();
-                      //     passwordController.clear();
-                      //     //showSpinner = false;
-                      //     pushAndRemove(context, MainScreen());
-                      //   }
-                      // else{
-                      //   tost(context, "Username or password is wrong");
-                      // }
+                
                       }),
                   SizedBox(
                     height: 10,

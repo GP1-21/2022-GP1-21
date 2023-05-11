@@ -23,11 +23,11 @@ class CityScreen extends StatefulWidget {
 
 class _CityScreenState extends State<CityScreen> {
   List<CityCard> cards = [
-    CityCard(imagePath: "images/Riyadh.png", cityName: "Riyadh"),
-    CityCard(imagePath: "images/Abha.png", cityName: "Abha"),
-    CityCard(imagePath: "images/Jeddah.png", cityName: "Jeddah"),
-    CityCard(imagePath: "images/Al-ola.png", cityName: "Al-Ula"),
-    CityCard(imagePath: "images/Alkhobar.png", cityName: "Alkhobar")
+    CityCard(imagePath: "images/Riyadh_jpg", cityName: "Riyadh"),
+    CityCard(imagePath: "images/abha1.jpg", cityName: "Abha"),
+    CityCard(imagePath: "images/jeddah-city.jpg", cityName: "Jeddah"),
+    CityCard(imagePath: "images/ALULA.jpg", cityName: "Al-Ula"),
+    CityCard(imagePath: "images/Khobar1.jpg", cityName: "Alkhobar")
   ];
   goNext(String name,String cityName)
   {
@@ -66,15 +66,15 @@ class _CityScreenState extends State<CityScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 10,),
+          SizedBox(height: 5,),
           Padding(
-            padding: const EdgeInsets.only(left: 10.0),
+            padding: const EdgeInsets.only(left: 30.0),
             child: Text("Select the city:",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
           ),
           Expanded(
             child: ListView.builder(
               //scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.only(left: 30, right:30,bottom: 10,top: 10),
+                padding: const EdgeInsets.only(left: 30, right:30,bottom: 10,top: 1),
                 itemCount: cards.length,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(

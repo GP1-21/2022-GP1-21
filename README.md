@@ -32,5 +32,12 @@ Steps for Android phone :
 2. Install 21_HunaKSA_App APK file located in Release section.
 3. Download the APK file 
 
+Admin application login credntials: 
+username: admin 
+password: admin1234
+
+User application login credntials:
+- create your own account using (Email, Username, Password)
+- OR use this account ( Email: test1@gmail.com , Password: test1234)
 
 Link to the HunaKSA GitHub repository https://github.com/GP1-21/2022-GP1-21

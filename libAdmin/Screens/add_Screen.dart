@@ -168,7 +168,7 @@ tost(context, "${nameController.text} added successfully");
                     Row(
                       children: [
                         Text(
-                          "Place name:",
+                          "Name:",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
@@ -179,7 +179,7 @@ tost(context, "${nameController.text} added successfully");
                             width: 210,
                             height: 50,
                             child: inputText(nameController, TextInputType.text,
-                                "Place Name")),
+                                "Name")),
                       ],
                     ),
                     SizedBox(
@@ -188,7 +188,7 @@ tost(context, "${nameController.text} added successfully");
                     Row(
                       children: [
                         Text(
-                          "Place photos:",
+                          "Photos:",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
@@ -216,7 +216,7 @@ tost(context, "${nameController.text} added successfully");
                     ),
                     Row(children: [
                       Text(
-                        "Place category:",
+                        "Category:",
                         style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                       ),
@@ -235,7 +235,7 @@ tost(context, "${nameController.text} added successfully");
                     ),
                     Row(children: [
                       Text(
-                        "Place type:",
+                        "Type:",
                         style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                       ),

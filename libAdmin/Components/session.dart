@@ -4,6 +4,5 @@ String username = "",email="",password="",city="";
 List interests=[];
 List imagesURLList=[];
 Map<String, dynamic> cityImage = {
-  "Al-Ula":"images/Al-ola.png",'Riyadh':"images/Riyadh.png",'Abha':"images/Abha.png",'Jeddah':"images/Jeddah.png",'Alkhobar':"images/Alkhobar.png"
+  "Al-Ula":"images/ALULA.jpg",'Riyadh':"images/Riyadh_.jpg",'Abha':"images/abha1.jpg",'Jeddah':"images/jeddah-city.jpg",'Alkhobar':"images/Khobar1.jpg"
 };
-// this page is for 

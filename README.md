@@ -9,7 +9,7 @@ Dart programing language and Flutter SDK.
 
 Lunching instructions for Android users:
 
-Steps
+Steps for Emulator : 
 
 1. Go to code tab in 2022-GP1-21 respository.
 2. Install 21_HunaKSA_App APK file located in Release section.
@@ -25,3 +25,9 @@ Alternatively,
 2. Install 21_HunaKSA_App APK file located in Release section.
 3. Open the emulator on your laptop.
 4. Drag and drop 21_HunaKSA_App APK file on the emulator screen.
+
+Steps for Android phone : 
+
+1. Go to code tab in 2022-GP1-21 respository.
+2. Install 21_HunaKSA_App APK file located in Release section.
+3. Download the APK file 

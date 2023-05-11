@@ -28,9 +28,9 @@ Alternatively,
 
 Steps for Android phone : 
 
-1. Go to Releases 2022-GP1-21 respository.
-2. Install 21_HunaKSA_App APK file located in Release section.
-3. Download the APK file 
+1. Go to Releases section of the 2022-GP1-21 respository.
+2. Install 21_HunaKSA_App APK file from the Assests.
+3. Open the App in your phone.  
 
 Admin application login credntials: 
 username: admin 

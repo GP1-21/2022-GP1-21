@@ -11,7 +11,7 @@ Widget PlaceCard(String placeName,BuildContext context)
         borderRadius: BorderRadius.circular(15)
 
     ),
-    height: 110,
+    height: 90,
     width: double.infinity,
     child:  Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,9 +20,9 @@ Widget PlaceCard(String placeName,BuildContext context)
         SizedBox(width: 15,),
         Padding(
           padding: const EdgeInsets.only(left: 15),
-          child: Text(placeName,style: const TextStyle(fontSize: 28,fontWeight: FontWeight.bold,color: Colors.black),),
+          child: Text(placeName,style: const TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.black),),
         ),
-        SizedBox(width:MediaQuery.of(context).size.width*.65,child: Divider(thickness: .7,color: Colors.black,))
+        SizedBox(width:MediaQuery.of(context).size.width*.95,child: Divider(thickness: .7,color: Colors.black12,))
 
       ],
     ),

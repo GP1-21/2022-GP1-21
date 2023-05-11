@@ -210,7 +210,7 @@ else
                     Row(
                       children: [
                         Text(
-                          "Place name:",
+                          "Name:",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
@@ -230,12 +230,12 @@ else
                     Row(
                       children: [
                         Text(
-                          "Place photos:",
+                          "Photos:",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         SizedBox(
-                          height: 5,
+                          height: 15,
                         ),
                         RoundedButton(
                           decuration: TextDecoration.underline,
@@ -258,7 +258,7 @@ else
                     ),
                     Row(children: [
                       Text(
-                        "Place category:",
+                        "Category:",
                         style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                       ),
@@ -278,12 +278,12 @@ else
                     ),
                     Row(children: [
                       Text(
-                        "Place type:",
+                        "Type:",
                         style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                       SizedBox(
-                        width: 5,
+                        width: 15,
                       ),
                       //drop down menu
                       dropDownalert(widget.type,"type", <String>[
@@ -295,7 +295,7 @@ else
                         "Beach",
                         "Spa",
                         "Parks"
-                      ],210),
+                      ],200),
                     ],),
                     SizedBox(
                       height: 20,
@@ -308,7 +308,7 @@ else
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         SizedBox(
-                          width: 5,
+                          width: 15,
                         ),
                         SizedBox(
                             width: 90,
@@ -373,7 +373,7 @@ else
                             width: 230,
                             height: 50,
                             child: inputText(locationController, TextInputType.text,
-                                "Location",true)),
+                                "Location",false)),
                       ],
                     ),
                     SizedBox(
@@ -397,9 +397,9 @@ else
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "to",
+                          "TO",
                           style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                       ),
                       SizedBox(

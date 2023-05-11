@@ -69,7 +69,7 @@ class _CityScreenState extends State<CityScreen> {
           SizedBox(height: 5,),
           Padding(
             padding: const EdgeInsets.only(left: 30.0),
-            child: Text("Select the city:",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+            child: Text("SELECT CITY:",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
           ),
           Expanded(
             child: ListView.builder(

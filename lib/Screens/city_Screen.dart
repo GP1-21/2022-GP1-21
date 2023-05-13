@@ -15,7 +15,7 @@ class CityScreen extends StatefulWidget {
   State<CityScreen> createState() => _CityScreenState();
 }
 
-//Add the Cites to the database, //https://dart.dev/codelabs/async-await
+//Create the Cites collection to the database, //https://dart.dev/codelabs/async-await
 class _CityScreenState extends State<CityScreen> {
   List<CityCard> cards = [
     CityCard(imagePath: "images/Riyadh.png", cityName: "Riyadh"),

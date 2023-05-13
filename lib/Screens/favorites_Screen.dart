@@ -8,8 +8,10 @@ import 'package:huna_ksa/Screens/placeDetail_Screen.dart';
 import 'package:huna_ksa/Widgets/favourite_Card.dart';
 import '../Components/common_Functions.dart';
 
+//https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 final _firestore = FirebaseFirestore.instance;
 
+//https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 class FavoritesScreen extends StatefulWidget {
   const FavoritesScreen({Key? key}) : super(key: key);
 
@@ -34,6 +36,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     }, "Delete", "Are you sure you want to delete the place?");
   }
 
+  //https://api.flutter.dev/flutter/widgets/StatelessWidget/build.html
   @override
   Widget build(BuildContext context) {
     return Scaffold(

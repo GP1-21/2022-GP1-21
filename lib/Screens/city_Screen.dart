@@ -6,13 +6,16 @@ import 'package:huna_ksa/Components/common_Functions.dart';
 import 'package:huna_ksa/Components/constants.dart';
 import 'package:huna_ksa/Components/session.dart' as session;
 
+//https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 final _firestore = FirebaseFirestore.instance;
 
+//https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 class CityScreen extends StatefulWidget {
   @override
   State<CityScreen> createState() => _CityScreenState();
 }
 
+//https://dart.dev/codelabs/async-await
 class _CityScreenState extends State<CityScreen> {
   List<CityCard> cards = [
     CityCard(imagePath: "images/Riyadh.png", cityName: "Riyadh"),

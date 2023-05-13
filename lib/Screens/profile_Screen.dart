@@ -12,7 +12,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:huna_ksa/Components/session.dart' as session;
 
 import '../Widgets/interest_Card.dart';
-final _firestore=FirebaseFirestore.instance;
+final _firestore=FirebaseFirestore.instance; //firebase connection
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -36,12 +36,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     nameController.text = session.username;
   });
 }
-  // void reSign() async
-  // {
-  //   await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //       email: session.email, password: session.password);
-  // }
-  void logout()async {
+
+  void logout()async { // user logging out of the app
 
     await FirebaseAuth.instance.signOut();
     Navigator.pushAndRemoveUntil(
@@ -61,7 +57,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         }),
             (Route route) => false);
   }
-  void setSessionData()
+  void setSessionData() // save user data after they have logged out
   {
     setState(() {
       session.username=nameController.text;
@@ -69,7 +65,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   }
   final _auth=FirebaseAuth.instance;
-  void updateUser() async
+  void updateUser() async // update the information the user changes in their profile
   {
     try {
 
@@ -83,13 +79,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           tost(context, "Profile Updated Successfully.");
           setSessionData();
           setEmpty();
-          //Navigator.pop(context);
+
         });
 
 
       });
 
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException catch (e) { // check if the email or password they changed are valid
       if (e.code == 'weak-password') {
         tost(context, "The password provided is too weak.");
         setState(() {
@@ -166,14 +162,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        smallButton("EDIT",color: kPinkColor,() async
+                        smallButton("Edit",color: kPinkColor,() async
                         {
                           setState(() {
                             enabled=!enabled;
                           });
                         }, height: 40,width: 90,  fontSize: 18),
 
-                        smallButton( "UPDATE",color: Color(0xC099C295),() async
+                        smallButton( "Update",color: kPrimaryColor,() async
                         {
 
                           if(nameController.text=="")
@@ -205,12 +201,12 @@ child: Padding(
   child:   Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-    smallButton("EDIT",color: kPinkColor, () async
+    smallButton("Edit",color: kPinkColor, () async
     {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => EditInterestScreen()
+            builder: (context) => EditInterestScreen() // user edits their interests
         ),
       ).then((value) => setState((){}));
     },height: 40,fontSize:18),
@@ -218,9 +214,9 @@ child: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            session.interests.isNotEmpty?InterestCard(title: session.interests[0], color: kPrimaryColor):Container(),
-            session.interests.length>1?InterestCard(title: session.interests[1], color: Color(0x7CFFFFFF)):Container(),
-            session.interests.length>2?InterestCard(title: session.interests[2], color:kPrimaryColor):Container(),
+            session.interests.isNotEmpty?InterestCard(title: session.interests[0], color: Color(0xFFDCCEDA)):Container(),
+            session.interests.length>1?InterestCard(title: session.interests[1], color: Color(0xFFB3BFB7)):Container(),
+            session.interests.length>2?InterestCard(title: session.interests[2], color: Color(0xFF7094A4)):Container(),
 
           ],
         ),
@@ -243,20 +239,17 @@ child: Padding(
                   child: Container(
                     height: 40,
                     width: 120,
-                    decoration: BoxDecoration(color: kPinkColor,borderRadius: BorderRadius.circular(25)),
+                    decoration: BoxDecoration(color: kPinkColor,borderRadius: BorderRadius.circular(15)),
                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text("LOG OUT", style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.bold),),
-                        ImageIcon(AssetImage('images/logout.png'),size: 29,color: Colors.black,),
+                        ImageIcon(AssetImage('images/logout.png'),size: 27,color: Colors.black,),
 
                       ],
                     ),
                   ),
                 ),
-                // RoundedButton(horizontal: 5,title: "Logout",color: kPinkColor,textColor: Colors.black,onPress: () async
-                // {
-                //   showAlertDialog(context, logout, "Logout", "Do you want to logout?");
-                // }, height: 0),
+
               ),
 
             ],

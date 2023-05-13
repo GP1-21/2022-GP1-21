@@ -8,17 +8,17 @@ import 'package:huna_ksa/Screens/placeDetail_Screen.dart';
 import 'package:huna_ksa/Widgets/favourite_Card.dart';
 import '../Components/common_Functions.dart';
 
-//https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
+//connect to the database in firebase, //https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 final _firestore = FirebaseFirestore.instance;
 
-//https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
+//Create the class of the favorites page, //https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 class FavoritesScreen extends StatefulWidget {
   const FavoritesScreen({Key? key}) : super(key: key);
 
   @override
   State<FavoritesScreen> createState() => _FavoritesScreenState();
 }
-
+//When the user want to delete a place from the favorite
 class _FavoritesScreenState extends State<FavoritesScreen> {
   deleteFavourite(String place) async {
     showAlertDialog(context, () async {
@@ -36,7 +36,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     }, "Delete", "Are you sure you want to delete the place?");
   }
 
-  //https://api.flutter.dev/flutter/widgets/StatelessWidget/build.html
+  //Create and design the frame of the page, //https://api.flutter.dev/flutter/widgets/StatelessWidget/build.html
   @override
   Widget build(BuildContext context) {
     return Scaffold(

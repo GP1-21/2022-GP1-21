@@ -9,14 +9,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../Components/constants.dart';
 
+//https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 //connect to the database in firebase
 final _firestore = FirebaseFirestore.instance;
 
+//https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html
 //StatefulWidget describes part of the user interface
 class HomeScreen extends StatefulWidget {
 
   //state read synchronously when the widget is built, might change during the lifetime of the widget
   @override
+  
+  //https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
@@ -31,11 +35,13 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+  //https://docs.flutter.dev/ui/interactive
   //transfer to place details page if the user click on the plase
   onClick(String name,String image){
     push(context, PlaceDetailScreen(place: name, imageURL: image,));
   }
 
+  //https://dart.dev/codelabs/async-await
   //add the place in favourite if the user click on the like button
   addToFavourite(String place,String imageurl) async {
     //bringing the data from firebase
@@ -58,6 +64,9 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  //https://www.c-sharpcorner.com/article/functions-in-flutter-3/
+  //https://api.flutter.dev/flutter/widgets/StatelessWidget/build.html
+  //https://api.flutter.dev/flutter/widgets/Positioned-class.html
   @override
   Widget build(BuildContext context) {
     return  SafeArea(

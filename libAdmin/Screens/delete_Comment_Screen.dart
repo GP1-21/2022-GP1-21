@@ -10,10 +10,10 @@ import 'package:huna_ksa_admin/Components/session.dart' as session;
 import 'package:huna_ksa_admin/Widgets/deletePlace_Card.dart';
 import 'package:huna_ksa_admin/Widgets/rounded_Button.dart';
 import 'package:image_picker/image_picker.dart';
-
+//connect to the database in firebase, //https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 final Storage storage = Storage();
 final _firestore = FirebaseFirestore.instance;
-
+//Create the class of the Delete Comment page, https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 class DeleteCommentScreen extends StatefulWidget {
   DeleteCommentScreen({
     required this.place,
@@ -22,7 +22,7 @@ class DeleteCommentScreen extends StatefulWidget {
   @override
   State<DeleteCommentScreen> createState() => _DeleteCommentScreenState();
 }
-
+//Create the Delete comment collection to the database, //https://dart.dev/codelabs/async-await
 class _DeleteCommentScreenState extends State<DeleteCommentScreen> {
   delete(String id) async {
     await _firestore
@@ -31,7 +31,7 @@ class _DeleteCommentScreenState extends State<DeleteCommentScreen> {
         .delete()
         .then((value) => Navigator.pop(context));
   }
-
+  //Create and design the frame of the page and the feilds
   @override
   Widget build(BuildContext context) {
     return Scaffold(

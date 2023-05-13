@@ -11,8 +11,10 @@ import 'package:huna_ksa_admin/Components/session.dart' as session;
 import 'add_Screen.dart';
 
 
-
+//connect to the database in firebase, //https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 final _firestore = FirebaseFirestore.instance;
+
+//Create the class of the city page, https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 class CityScreen extends StatefulWidget {
   CityScreen({required this.screenFrom});
   final String screenFrom;
@@ -20,7 +22,7 @@ class CityScreen extends StatefulWidget {
   @override
   State<CityScreen> createState() => _CityScreenState();
 }
-
+//Create the Cites collection to the database, //https://dart.dev/codelabs/async-await
 class _CityScreenState extends State<CityScreen> {
   List<CityCard> cards = [
     CityCard(imagePath: "images/Riyadh_jpg", cityName: "Riyadh"),
@@ -48,6 +50,7 @@ class _CityScreenState extends State<CityScreen> {
       push(context,SelectPlaceScreen(city: cityName, fromScreen: 'comment',) );
     }
   }
+  //Create and design the frame of the page
   @override
   Widget build(BuildContext context) {
     return Scaffold(

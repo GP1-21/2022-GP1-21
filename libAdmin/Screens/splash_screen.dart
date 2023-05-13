@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:huna_ksa_admin/Components/common_Functions.dart';
 import 'login_screen.dart';
 
-
+//Create the class of the splash page, https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 class SplashScreen extends StatefulWidget {
   static const String id='splash_screen';
   @override
@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     loadData();
   }
-
+  //Create and design the frame of the splash page
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);

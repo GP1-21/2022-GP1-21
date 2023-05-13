@@ -9,9 +9,11 @@ import '../Components/common_Functions.dart';
 import '../Widgets/rounded_Button.dart';
 import '../Components/constants.dart';
 
+//https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 //connect to the database in firebase
 final _firestore = FirebaseFirestore.instance;
 
+//https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 //StatefulWidget describes part of the user interface
 class InterestScreen extends StatefulWidget {
   static const String id = 'interest_screen';
@@ -81,6 +83,8 @@ class _InterestScreenState extends State<InterestScreen> {
       //tost(context, "$place Added successfully");
       }
   }
+  
+  //https://api.flutter.dev/flutter/widgets/StatelessWidget/build.html
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -124,6 +128,7 @@ class _InterestScreenState extends State<InterestScreen> {
                     ),
                   ),
 
+                  //https://api.flutter.dev/flutter/widgets/Positioned-class.html
                   //list of 8 interests
                   Positioned(
                     child: Container(

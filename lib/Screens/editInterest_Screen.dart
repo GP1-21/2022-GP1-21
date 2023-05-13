@@ -10,10 +10,10 @@ import '../Components/common_Functions.dart';
 import '../Widgets/rounded_Button.dart';
 import '../Components/constants.dart';
 
-//https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
+//connect to the database in firebase, //https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 final _firestore = FirebaseFirestore.instance;
 
-//https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
+//Create the class of the edit interest page, //https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 class EditInterestScreen extends StatefulWidget {
   static const String id = 'interest_screen';
 
@@ -32,7 +32,7 @@ class _EditInterestScreenState extends State<EditInterestScreen> {
 
     super.initState();
   }
-
+  //a new user Add&Delete the interests and checking if the user still have at least 3 interests
   onRemoveClick(String interest) {
     if (session.interests.length == 3) {
       tost(context, "Please keep at least 3 interests");
@@ -45,7 +45,7 @@ class _EditInterestScreenState extends State<EditInterestScreen> {
       }
     }
   }
-
+  
   onAddClick(String interest) {
     if (session.interests.contains(interest)) {
       tost(context, "$interest Already Added");
@@ -54,7 +54,7 @@ class _EditInterestScreenState extends State<EditInterestScreen> {
       tost(context, "$interest Added Successfully");
     }
   }
-
+  //for already user, add the interest to the user document in the database
   addInterest(String interest) async {
     await _firestore.collection('userData').doc(session.email).update(
       {
@@ -66,7 +66,7 @@ class _EditInterestScreenState extends State<EditInterestScreen> {
       });
     });
   }
-
+  //for already user, delete the interest to the user document in the database
   removeInterest(String interest) async {
     await _firestore.collection('userData').doc(session.email).update(
       {
@@ -79,7 +79,7 @@ class _EditInterestScreenState extends State<EditInterestScreen> {
     });
   }
 
-  //https://api.flutter.dev/flutter/widgets/StatelessWidget/build.html
+  //Create and design the frame of the page + Create the Interests collection in the database, //https://api.flutter.dev/flutter/widgets/StatelessWidget/build.html
   @override
   Widget build(BuildContext context) {
     return SafeArea(

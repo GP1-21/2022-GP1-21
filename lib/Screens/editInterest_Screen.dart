@@ -10,8 +10,10 @@ import '../Components/common_Functions.dart';
 import '../Widgets/rounded_Button.dart';
 import '../Components/constants.dart';
 
+//https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 final _firestore = FirebaseFirestore.instance;
 
+//https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 class EditInterestScreen extends StatefulWidget {
   static const String id = 'interest_screen';
 
@@ -19,6 +21,7 @@ class EditInterestScreen extends StatefulWidget {
   State<EditInterestScreen> createState() => _EditInterestScreenState();
 }
 
+//https://api.flutter.dev/flutter/widgets/State/initState.html
 class _EditInterestScreenState extends State<EditInterestScreen> {
   bool showSpinner = false;
   //List<String> interests=[];
@@ -76,6 +79,7 @@ class _EditInterestScreenState extends State<EditInterestScreen> {
     });
   }
 
+  //https://api.flutter.dev/flutter/widgets/StatelessWidget/build.html
   @override
   Widget build(BuildContext context) {
     return SafeArea(

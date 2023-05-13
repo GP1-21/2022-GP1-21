@@ -6,7 +6,7 @@ import 'package:huna_ksa/Components/session.dart' as session;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-
+//Create the class of the city page, https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 class SplashScreen extends StatefulWidget {
   static const String id='splash_screen';
   @override
@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     loadData();
   }
-
+  //Create and design the frame of the splash page
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);

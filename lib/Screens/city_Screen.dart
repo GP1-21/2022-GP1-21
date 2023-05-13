@@ -6,7 +6,7 @@ import 'package:huna_ksa/Components/common_Functions.dart';
 import 'package:huna_ksa/Components/constants.dart';
 import 'package:huna_ksa/Components/session.dart' as session; //Connect with the database
 
-//https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
+//connect to the database in firebase, //https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 final _firestore = FirebaseFirestore.instance;
 
 //Create the class of the city page, https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html

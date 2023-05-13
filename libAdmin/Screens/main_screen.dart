@@ -13,7 +13,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 
 
-final _firestore = FirebaseFirestore.instance;
+final _firestore = FirebaseFirestore.instance; // firebase connection 
 class MainScreen extends StatefulWidget {
 
   @override
@@ -22,7 +22,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
 bool bell=false;
-  void logout()async {
+  void logout()async { 
 
     await FirebaseAuth.instance.signOut();
     Navigator.pushAndRemoveUntil(
@@ -36,20 +36,20 @@ bool bell=false;
             position: Tween<Offset>(
               begin: const Offset(1.0, 0.0),
               end: Offset.zero,
-            ).animate(animation),
+            ).animate(animation), 
             child: child,
           );
         }),
             (Route route) => false);
   }
   @override
-  void initState() {
+  void initState() { 
     // TODO: implement initState
     checkBell();
     super.initState();
   }
   checkBell() async {
-    if(await _firestore.collection('reportedComments').snapshots().length==0){
+    if(await _firestore.collection('reportedComments').snapshots().length==0){ // notify admin when a comment is reported
       setState(() {
         bell=false;
       });
@@ -76,16 +76,8 @@ bool bell=false;
                           builder: (context) => ReportedCommentScreen()
                       ),
                     ).then((value) => setState((){
-              }));              // if(bell){
-              //   Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (context) => ReportedCommentScreen()
-              //     ),
-              //   ).then((value) => checkBell());
-              //
-              // }
-
+              }));              
+             
             },child:StreamBuilder<QuerySnapshot>(
     stream: _firestore.collection('reportedComments').snapshots(),
     builder: (context, snapshot) {
@@ -117,7 +109,7 @@ bool bell=false;
                   children: [
                     GestureDetector(
                       onTap: (){
-                        push(context, CityScreen(screenFrom: "delete"));
+                        push(context, CityScreen(screenFrom: "delete")); // show city screen for admin to choose which city to delete place from
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -133,7 +125,7 @@ bool bell=false;
                     ),
                     GestureDetector(
                       onTap: (){
-                        push(context, CityScreen(screenFrom: "add"));
+                        push(context, CityScreen(screenFrom: "add")); // show city screen for admin to choose which city to add place in
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -149,7 +141,7 @@ bool bell=false;
                     ),
                     GestureDetector(
                       onTap: (){
-                        push(context, CityScreen(screenFrom: "comment"));
+                        push(context, CityScreen(screenFrom: "comment")); // show city screen for admin to choose in which city to manage comments
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -165,7 +157,7 @@ bool bell=false;
                     ),
                     GestureDetector(
                       onTap: (){
-                        push(context, CityScreen(screenFrom: "edit"));
+                        push(context, CityScreen(screenFrom: "edit")); // show city screen for admin to choose which city to edit
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -184,7 +176,7 @@ bool bell=false;
               ),
               SizedBox(height: 5,),
               GestureDetector(
-                onTap: (){
+                onTap: (){ // log out function
                   showAlertDialog(context, logout, "", "Do you want to logout?");
                 },
                 child: Container(

@@ -9,15 +9,16 @@ import 'package:flutter/services.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:huna_ksa/Components/session.dart' as session;
 
+
 import 'login_screen.dart';
-final _firestore = FirebaseFirestore.instance;
+final _firestore = FirebaseFirestore.instance; // connection to firebase
 
 class RegistrationScreen extends StatefulWidget {
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
+class _RegistrationScreenState extends State<RegistrationScreen> { // constructor
   bool showSpinner = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -32,56 +33,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       passwordController.clear();
     });
   }
-  createUser() async {
-    setState(() {
-      showSpinner=true;
-    });
-    try {
-      final newUser =
-      await _auth.createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text);
-      if (newUser != null) {
-        await _firestore
-            .collection('userData')
-            .doc(emailController.text)
-            .set(
-          {
-            'email': emailController.text,
-            'password': passwordController.text,
-            'name':nameController.text,
-            'interest':[],
-            'city':''
-          },
-        ).then((value) {
-          setState(() {
-            session.city='';
-            session.email=emailController.text;
-            session.username=nameController.text;
-            session.password=passwordController.text;
-            showSpinner = false;
-          });
-          push(context, InterestScreen());
-        });
-      }
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        tost(context, 'The password provided is too weak.');
 
-        setState(() {
-          showSpinner = false;
-        });
-      } else if (e.code == 'email-already-in-use') {
-        tost(context,
-            'The account already exists for that email.');
-        setState(() {
-          showSpinner = false;
-        });
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
@@ -116,7 +68,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  SizedBox(
+                  SizedBox( // creation of the username field
                     height: 190.0,
                   ),
                   Text("Username",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22),),
@@ -126,14 +78,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     TextInputType.text,
                     Icon(Icons.person_outlined),
                   ),
-                  SizedBox(
+                  SizedBox( // creation of the email field
                     height: 8.0,
                   ),
                   Text("Email",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22),),
 
                   customInputText(emailController, 'Email', TextInputType.emailAddress,
                       Icon(Icons.email_outlined)),
-                  SizedBox(
+                  SizedBox( // creation of the password field
                     height: 8.0,
                   ),
                   Text("Password",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22),),
@@ -146,7 +98,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     Icon(Icons.lock_outlined),
                     IconButton(
                       icon: Icon(Icons.remove_red_eye_outlined),
-                      color: obscure1 ? Colors.black : Colors.grey,
+                      color: obscure1 ? Colors.black : Colors.grey, //change field color when it is pressed
                       onPressed: () {
                         setState(() {
                           this.obscure1 = !this.obscure1;
@@ -165,7 +117,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     title: 'Create',
                     color: kPrimaryColor,
                     textColor: Colors.white,
-                    onPress: () async {
+                    onPress: () async { // when user clicks create, their username and password will be checked and validated
                       if (nameController.text == "") {
                         tost(context, 'Please enter Username.');
                       } else if (!RegExp(
@@ -175,14 +127,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       } else if (passwordController.text == "") {
                         tost(context, 'Please Enter Password');
                       } else {
+createUser();
 
-                        createUser();
 
 
                       }
                     },
                   ),
-                  SizedBox(
+                  SizedBox( // redirect to login screen
                     height: 10.0,
                   ),
                   Center(
@@ -201,5 +153,54 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
+  createUser() async { // create user and add them in the database
+    setState(() {
+      showSpinner=true;
+    });
+    try {
+      final newUser =
+      await _auth.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text);
+      if (newUser != null) {
+        await _firestore
+            .collection('userData')
+            .doc(emailController.text)
+            .set(
+          {
+            'email': emailController.text,
+            'password': passwordController.text,
+            'name': nameController.text,
+            'interest':[],
+            'city':''
+          },
+        ).then((value) {
+          setState(() {
+            session.email=emailController.text;
+            session.username=nameController.text;
+            session.password=passwordController.text;
+            showSpinner = false;
+          });
+          push(context, InterestScreen());
+        });
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') { // firebase checks and validates pwd
+        tost(context, 'The password provided is too weak.');
+
+        setState(() {
+          showSpinner = false;
+        });
+      } else if (e.code == 'email-already-in-use') { // prevent creation of 2 accounts with the same email
+        tost(context,
+            'The account already exists for that email.');
+        setState(() {
+          showSpinner = false;
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
 }

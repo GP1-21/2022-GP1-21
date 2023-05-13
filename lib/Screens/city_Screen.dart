@@ -4,18 +4,18 @@ import 'package:huna_ksa/Widgets//city_Card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:huna_ksa/Components/common_Functions.dart';
 import 'package:huna_ksa/Components/constants.dart';
-import 'package:huna_ksa/Components/session.dart' as session;
+import 'package:huna_ksa/Components/session.dart' as session; //Connect with the database
 
 //https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 final _firestore = FirebaseFirestore.instance;
 
-//https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
+//Create the class of the city page, https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 class CityScreen extends StatefulWidget {
   @override
   State<CityScreen> createState() => _CityScreenState();
 }
 
-//https://dart.dev/codelabs/async-await
+//Add the Cites to the database, //https://dart.dev/codelabs/async-await
 class _CityScreenState extends State<CityScreen> {
   List<CityCard> cards = [
     CityCard(imagePath: "images/Riyadh.png", cityName: "Riyadh"),
@@ -36,7 +36,7 @@ class _CityScreenState extends State<CityScreen> {
       pushAndRemove(context, MainScreen());
     });
   }
-
+  //Create and design the frame of the page
   @override
   Widget build(BuildContext context) {
     return Scaffold(

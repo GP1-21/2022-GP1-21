@@ -13,8 +13,10 @@ import '../Components/common_Functions.dart';
 import 'package:provider/provider.dart';
 import '../Components/location_helper.dart';
 
+//https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 final _firestore = FirebaseFirestore.instance;
 
+//https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 class MapView extends StatefulWidget {
   const MapView({Key? key}) : super(key: key);
 

@@ -11,8 +11,11 @@ import 'package:huna_ksa/Components/session.dart' as session;
 
 
 import 'login_screen.dart';
+
+//https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 final _firestore = FirebaseFirestore.instance; // connection to firebase
 
+//https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 class RegistrationScreen extends StatefulWidget {
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
@@ -34,6 +37,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> { // constructo
     });
   }
 
+  //https://api.flutter.dev/flutter/widgets/StatelessWidget/build.html
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);

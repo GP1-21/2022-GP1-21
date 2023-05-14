@@ -9,7 +9,15 @@ Dart programing language and Flutter SDK.
 
 Lunching instructions for Android users:
 
-Steps for Emulator : 
+Steps for runinng the code on emulator or Android phone:
+1. Go to code tab in 2022-GP1-21 respository.
+2. Download ZIP folder.
+3. Open the code folder using Android studio or Visual studio.
+4. Run the Emulator or Android phone.
+5. Run the Flask server by wiriting the command (python Flask.py) in the Flask.py terminal. 
+6. Run the code. 
+
+Steps for run APK on Emulator : 
 
 1. Go to code tab in 2022-GP1-21 respository.
 2. Install 21_HunaKSA_App APK file located in Release section.
@@ -26,7 +34,7 @@ Alternatively,
 3. Open the emulator on your laptop.
 4. Drag and drop 21_HunaKSA_App APK file on the emulator screen.
 
-Steps for Android phone : 
+Steps for  run APK on Android phone : 
 
 1. Go to Releases section of the 2022-GP1-21 respository.
 2. Install 21_HunaKSA_App APK file from the Assests.

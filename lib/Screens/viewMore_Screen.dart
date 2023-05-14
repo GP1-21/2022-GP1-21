@@ -15,6 +15,7 @@ import '../Components/constants.dart';
 import '../components/common_Functions.dart';
 import 'home_Screen.dart';
 
+//https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 final _firestore = FirebaseFirestore.instance; // connection to firebase
 
 
@@ -27,6 +28,7 @@ enum _SelectedTab {
   More,
 }
 
+//https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 class ViewMoreScreen extends StatefulWidget {
   final String categoryName;
 
@@ -141,6 +143,8 @@ class _ViewMoreScreenState extends State<ViewMoreScreen> {
     }
     return title;
   }
+  
+  //https://api.flutter.dev/flutter/widgets/StatelessWidget/build.html
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -17,8 +17,10 @@ import '../Components/constants.dart';
 import 'home_Screen.dart';
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 
+//https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 final _firestore = FirebaseFirestore.instance; //firebase connection
 
+//https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 class MainScreen extends StatefulWidget {
   MainScreen({this.title = ""});
 
@@ -94,6 +96,7 @@ class _MainScreenState extends State<MainScreen> {
     return title;
   }
 
+  //https://api.flutter.dev/flutter/widgets/StatelessWidget/build.html
   @override
   Widget build(BuildContext context) {
     return Scaffold(

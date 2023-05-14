@@ -23,6 +23,8 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     loadData();
   }
+  
+  //https://api.flutter.dev/flutter/widgets/StatelessWidget/build.html
   //Create and design the frame of the splash page
   @override
   Widget build(BuildContext context) {

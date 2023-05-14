@@ -14,9 +14,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:place_picker/entities/location_result.dart';
 import 'package:place_picker/widgets/place_picker.dart';
 
+//https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 final Storage storage = Storage();
 final _firestore = FirebaseFirestore.instance;
 
+//https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 class AddScreen extends StatefulWidget {
   AddScreen({required this.city});
 
@@ -124,7 +126,7 @@ tost(context, "${nameController.text} added successfully");
     // });
   }
 
-
+//https://api.flutter.dev/flutter/widgets/StatelessWidget/build.html
   //style of the page
   @override
   Widget build(BuildContext context) {

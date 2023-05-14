@@ -12,8 +12,11 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:huna_ksa/Components/session.dart' as session;
 
 import '../Widgets/interest_Card.dart';
+
+//https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 final _firestore=FirebaseFirestore.instance; //firebase connection
 
+//https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 class ProfileScreen extends StatefulWidget {
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -25,6 +28,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool enabled=false;
   final emailController = TextEditingController();
   final nameController = TextEditingController();
+  
+  
+//https://api.flutter.dev/flutter/widgets/State/initState.html
 @override
   void initState() {
   // TODO: implement initState
@@ -107,6 +113,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       enabled=false;
     });
   }
+  
+  //https://api.flutter.dev/flutter/widgets/StatelessWidget/build.html
   @override
   Widget build(BuildContext context) {
     return Scaffold(

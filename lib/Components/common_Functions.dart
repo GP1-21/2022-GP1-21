@@ -1,7 +1,7 @@
 
 import 'package:huna_ksa/components/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:huna_ksa/components/session.dart' as session;
+import 'package:huna_ksa/Components/session.dart' as session;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';

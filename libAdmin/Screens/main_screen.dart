@@ -11,8 +11,7 @@ import 'package:huna_ksa_admin/Widgets/rounded_Button.dart';
 import 'login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
-
+//https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 final _firestore = FirebaseFirestore.instance; // firebase connection 
 class MainScreen extends StatefulWidget {
 
@@ -60,6 +59,9 @@ bool bell=false;
 
     }
   }
+  
+  
+//https://api.flutter.dev/flutter/widgets/StatelessWidget/build.html
   @override
   Widget build(BuildContext context) {
     return Scaffold(

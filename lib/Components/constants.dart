@@ -27,6 +27,16 @@ InputDecoration kTextFieldDecoration=const InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );
+InputDecoration kAddTextFieldDecoration=InputDecoration(
+  hintText: 'Enter Value',
+  filled: true,
+  fillColor: Colors.white,
+  //contentPadding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 80.0),
+  border: OutlineInputBorder(
+    borderSide: BorderSide.none,
+    borderRadius: BorderRadius.circular(15),
+  ),
+);
 
 
 Widget customInputText(TextEditingController controller, String hint,

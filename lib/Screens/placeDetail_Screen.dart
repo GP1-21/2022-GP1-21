@@ -11,8 +11,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../Components/constants.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 
+//https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 final _firestore = FirebaseFirestore.instance;
 
+
+//https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 class PlaceDetailScreen extends StatefulWidget {
   PlaceDetailScreen({required this.place, required this.imageURL});
   final place, imageURL;

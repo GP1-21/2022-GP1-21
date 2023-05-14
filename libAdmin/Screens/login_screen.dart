@@ -53,6 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
+            //https://api.flutter.dev/flutter/widgets/Positioned-class.html
          Positioned(top: MediaQuery.of(context).size.height*.15,
              child: Image(image: AssetImage("images/shape.png",),height: MediaQuery.of(context).size.width*.50,width: MediaQuery.of(context).size.width*.50,)),
 

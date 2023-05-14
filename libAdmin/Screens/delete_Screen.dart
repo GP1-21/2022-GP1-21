@@ -11,10 +11,12 @@ import 'package:huna_ksa_admin/Widgets/deletePlace_Card.dart';
 import 'package:huna_ksa_admin/Widgets/rounded_Button.dart';
 import 'package:image_picker/image_picker.dart';
 
+//https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 //connect to the database in firebase
 final Storage storage=Storage();
 final _firestore = FirebaseFirestore.instance;
 
+//https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 //StatefulWidget describes part of the user interface
 class DeleteScreen extends StatefulWidget {
   DeleteScreen({required this.city});
@@ -38,6 +40,8 @@ class _DeleteScreenState extends State<DeleteScreen> {
     }
   }
 
+  
+//https://api.flutter.dev/flutter/widgets/StatelessWidget/build.html
   //page structure
   @override
   Widget build(BuildContext context) {

@@ -9,10 +9,12 @@ import 'package:huna_ksa_admin/Widgets/rounded_Button.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+//https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 //connect to the database in firebase
 final Storage storage = Storage();
 final _firestore = FirebaseFirestore.instance;
 
+//https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 //StatefulWidget describes part of the user interface
 class EditScreen extends StatefulWidget {
   EditScreen({required this.city, required this.category, required this.type, this.imageUrls, required this.name, required this.price, required this.description, required this.location, required this.from, required this.to, required this.time, required this.priceCheck});
@@ -166,7 +168,7 @@ else
 
   }
 
-
+//https://api.flutter.dev/flutter/widgets/StatelessWidget/build.html
 //the page structure
   @override
   Widget build(BuildContext context) {

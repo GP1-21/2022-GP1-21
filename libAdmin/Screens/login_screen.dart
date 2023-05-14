@@ -11,8 +11,10 @@ import '../Components/constants.dart';
 import '../main.dart';
 import 'main_screen.dart';
 
+//https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 final _firestore = FirebaseFirestore.instance;
 
+//https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -27,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final _auth = FirebaseAuth.instance;
 
+  //https://api.flutter.dev/flutter/widgets/StatelessWidget/build.html
   @override
   Widget build(BuildContext context) {
     return Scaffold(

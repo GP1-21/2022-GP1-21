@@ -10,7 +10,7 @@ app = Flask(__name__)
 cwd = os.getcwd()
 
 # Load the data into a pandas dataframe
-data = pd.read_csv(os.path.join(cwd, 'places_data.csv'))
+data = pd.read_csv(os.path.join(cwd, 'HunaKSAPlaceData.csv'))
 
 # Create a CountVectorizer object to generate the term frequency matrix
 cv = CountVectorizer()

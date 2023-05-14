@@ -10,8 +10,10 @@ import 'package:huna_ksa_admin/Components/session.dart' as session;
 import '../Widgets/place_Card.dart';
 import 'add_Screen.dart';
 
+//https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 final _firestore = FirebaseFirestore.instance;
 
+//https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html
 class SelectPlaceScreen extends StatefulWidget {
   SelectPlaceScreen({required this.city, required this.fromScreen});
   final String city, fromScreen;
@@ -21,6 +23,8 @@ class SelectPlaceScreen extends StatefulWidget {
 }
 //Selecting place to Delete or Edit
 class _SelectPlaceScreenState extends State<SelectPlaceScreen> {
+  
+ //https://api.flutter.dev/flutter/widgets/StatelessWidget/build.html 
   @override
   Widget build(BuildContext context) {
     return Scaffold(

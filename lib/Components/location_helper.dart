@@ -11,6 +11,7 @@ class LocationHelper {
     LocationPermission permission;
 
     // Test if location services are enabled.
+    //https://pub.dev/packages/geolocator
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       // Location services are not enabled don't continue

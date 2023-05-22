@@ -155,6 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
   // Return user data after login successfully
+  //https://firebase.google.com/docs/auth/flutter/start?hl=ar
   Future getCurrentUser() async {
     try {
       final user = await _auth.currentUser;
@@ -251,7 +252,7 @@ class _LoginScreenState extends State<LoginScreen> {
         setState(() {
           showSpinner = true;
         });
-
+// https://firebase.google.com/docs/auth/flutter/start?hl=ar
         await _auth
               //Sending password reset email to the given email adress
             .sendPasswordResetEmail(email: emailController.text)

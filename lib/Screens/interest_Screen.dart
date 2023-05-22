@@ -11,6 +11,7 @@ import '../Components/constants.dart';
 
 //https://medium.com/enappd/connecting-cloud-firestore-database-to-flutter-voting-app-2da5d8631662
 //connect to the database in firebase
+//https://firebase.flutter.dev/docs/firestore/usage/
 final _firestore = FirebaseFirestore.instance;
 
 //https://api.flutter.dev/flutter/widgets/StatefulWidget/createState.html

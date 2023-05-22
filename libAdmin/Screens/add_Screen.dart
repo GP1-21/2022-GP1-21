@@ -38,6 +38,7 @@ class _AddScreenState extends State<AddScreen> {
   TextEditingController fromController = TextEditingController();
   TextEditingController toController = TextEditingController();
 
+  //https://stackoverflow.com/questions/59926243/how-to-dispose-flutter-google-maps-controller
   final Completer<GoogleMapController> _controller = Completer();
 
   static const CameraPosition _kGooglePlex = CameraPosition(
@@ -101,6 +102,7 @@ class _AddScreenState extends State<AddScreen> {
   double lng = 0.0;
 
   // Storing the place data in the placeData collection on Firebase
+  //https://www.youtube.com/watch?v=85PNCR7SpQk&ab_channel=dbestech
   Future saveData() async {
     await _firestore.collection('placeData').doc(nameController.text).set(
       {

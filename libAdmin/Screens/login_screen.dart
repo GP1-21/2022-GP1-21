@@ -107,20 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                   ),
-                  //SizedBox(height: ,),
-                  // Align(
-                  //   alignment: Alignment.topLeft,
-                  //   child: TextButton(
-                  //       child: Text(
-                  //         "FORGET PASSWORD",
-                  //         style: (TextStyle(
-                  //             decoration: TextDecoration.underline,
-                  //             color: Color(0xFF616161))),
-                  //       ),
-                  //       onPressed: () {
-                  //         resetPassword();
-                  //       }),
-                  // ),
+             
                   SizedBox(
                     height: 22.0,
                   ),
@@ -216,7 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }else{
 
         }
-      }
+      } //// https://firebase.google.com/docs/auth/flutter/start?hl=ar
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         setState(() {

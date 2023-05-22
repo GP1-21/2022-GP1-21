@@ -27,7 +27,7 @@ class PlaceDetailScreen extends StatefulWidget {
 class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
   bool showSpinner =
       false;
-  final _auth = FirebaseAuth.instance;
+  final _auth = FirebaseAuth.instance; //https://firebase.flutter.dev/docs/auth/usage/
   int index = 0;
   @override
   void initState() {
@@ -92,7 +92,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
   }
   //Map section 
   //responsibel for displaying the map
-  final Completer<GoogleMapController> _controller =
+  final Completer<GoogleMapController> _controller = //https://stackoverflow.com/questions/59926243/how-to-dispose-flutter-google-maps-controller
   Completer<GoogleMapController>();
   
   @override
@@ -363,7 +363,7 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                               ),
                                 //method when map is ready to use
                               onMapCreated: (GoogleMapController controller) {
-                              _controller.complete(controller);
+                              _controller.complete(controller); //https://stackoverflow.com/questions/59926243/how-to-dispose-flutter-google-maps-controller
                               },
                              ),
                             ),

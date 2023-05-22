@@ -28,7 +28,7 @@ class _MapViewState extends State<MapView> {
   
   //producing future object to complete them later with value
   final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
+      Completer<GoogleMapController>(); //https://stackoverflow.com/questions/59926243/how-to-dispose-flutter-google-maps-controller
 
   //latitude and longitude
   double lat = 0.0;
@@ -71,7 +71,7 @@ class _MapViewState extends State<MapView> {
         ? Center(
             child: CircularProgressIndicator(),
           )
-        : GoogleMap(
+        : GoogleMap( //https://medium.com/pharos-production/using-google-maps-on-flutter-for-android-d62b724d86b9
             compassEnabled: true,
             mapType: MapType.normal,
             markers: _marker,
